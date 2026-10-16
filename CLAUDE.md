@@ -6,7 +6,7 @@ College project: a searchable archive of 500 real Indian recipes across 35 regio
 All app code is in `github-upload-ready/`. The repo root holds only this file and `.claude/skills/`.
 
 - `app/page.tsx`: the whole UI. Hero search, 13 filters, grid / editorial-list toggle, recipe popup (Escape closes it).
-- `app/voronoi.tsx`: 3D Voronoi globe on the cover, tiles from `lib/images.ts` (Unsplash).
+- `app/book.tsx`: floating CSS-3D cookbook on the cover with "Ingredients / Recipe / Story / Emotion" orbiting it (pure CSS, pointer parallax, reduced-motion fallback).
 - `app/layout.tsx`: fonts and page metadata. `app/globals.css`: all styling, tokens on `:root`.
 - `lib/data.ts`: `Recipe` type, the `BASE` block, the parser, and `OPTIONS` (filter values).
 - `lib/recipes/*.ts`: recipe batches, each exported as one template string.

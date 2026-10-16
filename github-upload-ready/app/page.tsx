@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { generateRecipes, OPTIONS, Recipe } from "@/lib/data";
 import { photoSlug, DishPhoto } from "@/lib/images";
 import MANIFEST from "@/lib/photo-manifest.json";
-import Voronoi from "./voronoi";
+import Book from "./book";
 
 const GROUPS: { name: string; facets: { key: keyof Recipe; label: string; opts: readonly string[] }[] }[] = [
   {
@@ -403,7 +403,7 @@ export default function Home() {
             </div>
 
             <div className="hero__visual">
-              <Voronoi />
+              <Book />
             </div>
           </div>
         </section>

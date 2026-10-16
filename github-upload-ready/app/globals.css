@@ -430,95 +430,390 @@ a:hover {
   color: var(--c-ink);
 }
 
-/* ================= 3D VORONOI ORB CENTERPIECE ================= */
+/* ================= FLOATING 3D BOOK CENTERPIECE ================= */
 .hero__visual {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.orbWrap {
+.bookStage {
+  --bw: 200px;
+  --bh: 260px;
+  --bt: 44px;
+  --r: 178px;
+  --ring: 150px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   position: relative;
-  width: 340px;
-  height: 340px;
+  width: 400px;
+  height: 420px;
   display: grid;
   place-items: center;
-  perspective: 900px;
+  perspective: 1100px;
 }
 
-.orbGlow {
+.bookGlow {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--kesar) 34%, transparent), transparent 70%);
-  filter: blur(24px);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--kesar) 30%, transparent),
+    color-mix(in srgb, var(--gulabi) 12%, transparent) 55%,
+    transparent 72%
+  );
+  filter: blur(28px);
   pointer-events: none;
 }
 
-.orbRing {
+.bookShadow {
   position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 200px;
+  height: 28px;
+  margin-left: -100px;
   border-radius: 50%;
-  border: 1px dashed color-mix(in srgb, var(--kesar) 45%, transparent);
+  background: radial-gradient(ellipse, rgba(31, 26, 23, 0.3), transparent 70%);
+  filter: blur(4px);
+  animation: bookShadow 6s ease-in-out infinite alternate;
+}
+
+.bookScene {
+  position: relative;
+  width: var(--bw);
+  height: var(--bh);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+}
+
+.bookFloat {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: bookFloat 6s ease-in-out infinite alternate;
+}
+
+.book {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(-8deg) rotateY(24deg);
+  animation: bookSway 9s ease-in-out infinite alternate;
+}
+
+.book__face {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.book__front {
+  inset: 0;
+  transform: translateZ(calc(var(--bt) / 2));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 1.6rem 1.2rem;
+  border-radius: 3px 12px 12px 3px;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.3), transparent 45%),
+    linear-gradient(160deg, var(--kesar), var(--mirchi) 78%);
+  box-shadow: inset 7px 0 12px rgba(31, 26, 23, 0.22);
+  color: var(--surface);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Spice stripe across the top of the cover */
+.book__front::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: var(--spice-stripe);
+}
+
+/* Thin inner frame, like a foil-stamped border */
+.book__front::after {
+  content: "";
+  position: absolute;
+  inset: 16px 12px 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
   pointer-events: none;
 }
 
-.orbRing--outer {
+.book__issue {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.book__title {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+.book__title em {
+  display: block;
+  color: var(--haldi-tint);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* A little thali: a plate with five katoris */
+.book__thali {
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background:
+    radial-gradient(circle at 50% 24%, var(--haldi) 0 5px, transparent 6px),
+    radial-gradient(circle at 77% 44%, var(--kadi-tint) 0 5px, transparent 6px),
+    radial-gradient(circle at 67% 74%, var(--gulabi-tint) 0 5px, transparent 6px),
+    radial-gradient(circle at 33% 74%, var(--surface) 0 5px, transparent 6px),
+    radial-gradient(circle at 23% 44%, var(--neel-tint) 0 5px, transparent 6px),
+    rgba(255, 255, 255, 0.16);
+}
+
+.book__sub {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.book__back {
   inset: 0;
-  animation: spinSlow 48s linear infinite;
+  transform: rotateY(180deg) translateZ(calc(var(--bt) / 2));
+  border-radius: 12px 3px 3px 12px;
+  background: color-mix(in srgb, var(--mirchi) 82%, var(--ink));
 }
 
-.orbRing--inner {
-  inset: 22px;
-  border-style: solid;
-  border-color: var(--border);
+.book__spine {
+  top: 0;
+  left: calc((var(--bw) - var(--bt)) / 2);
+  width: var(--bt);
+  height: var(--bh);
+  transform: rotateY(-90deg) translateZ(calc(var(--bw) / 2));
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--neel) 70%, var(--ink)),
+    var(--neel) 45%,
+    color-mix(in srgb, var(--neel) 80%, var(--ink))
+  );
+  box-shadow: inset 0 14px 0 -10px var(--haldi), inset 0 -14px 0 -10px var(--haldi);
 }
 
-@keyframes spinSlow {
-  to {
-    transform: rotate(360deg);
+.book__spine span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--haldi);
+}
+
+.book__pages {
+  background: var(--paper);
+}
+
+.book__pages--side {
+  top: 5px;
+  left: calc((var(--bw) - var(--bt)) / 2);
+  width: var(--bt);
+  height: calc(var(--bh) - 10px);
+  transform: rotateY(90deg) translateZ(calc(var(--bw) / 2 - 4px));
+  background: repeating-linear-gradient(90deg, var(--paper) 0 2px, var(--paper-3) 2px 3px);
+}
+
+.book__pages--top,
+.book__pages--bottom {
+  left: 4px;
+  top: calc((var(--bh) - var(--bt)) / 2);
+  width: calc(var(--bw) - 8px);
+  height: var(--bt);
+  background: repeating-linear-gradient(0deg, var(--paper) 0 2px, var(--paper-3) 2px 3px);
+}
+
+.book__pages--top {
+  transform: rotateX(90deg) translateZ(calc(var(--bh) / 2 - 5px));
+}
+
+.book__pages--bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--bh) / 2 - 5px));
+}
+
+/* The four words ride a tilted ring: below the book in front, above it behind */
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+}
+
+/* preserve-3d keeps the centred pill from being clipped to the word's own box;
+   the depth fade lives on the pill because opacity here would flatten it again */
+.orbitWord {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  animation: orbitWord 26s linear infinite;
+  animation-delay: calc(var(--i) * -6.5s);
+}
+
+.orbitWord__pill {
+  display: block;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  padding: 0.38rem 0.95rem;
+  border-radius: 99px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.02rem;
+  font-style: italic;
+  font-weight: 600;
+  background: var(--c-tint);
+  color: var(--c-ink);
+  border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+  box-shadow: var(--shadow-card);
+  animation: orbitFade 26s linear infinite;
+  animation-delay: calc(var(--i) * -6.5s);
+}
+
+.orbitWord--1 {
+  --c: var(--kadi);
+  --c-ink: var(--kadi-ink);
+  --c-tint: var(--kadi-tint);
+}
+.orbitWord--2 {
+  --c: var(--kesar);
+  --c-ink: var(--kesar-ink);
+  --c-tint: var(--kesar-tint);
+}
+.orbitWord--3 {
+  --c: var(--neel);
+  --c-ink: var(--neel-ink);
+  --c-tint: var(--neel-tint);
+}
+.orbitWord--4 {
+  --c: var(--gulabi);
+  --c-ink: var(--gulabi-ink);
+  --c-tint: var(--gulabi-tint);
+}
+
+@keyframes orbitWord {
+  0% {
+    transform: rotateY(0deg) translateZ(var(--r)) rotateY(0deg) translateY(var(--ring));
+  }
+  12.5% {
+    transform: rotateY(45deg) translateZ(var(--r)) rotateY(-45deg) translateY(calc(var(--ring) * 0.7));
+  }
+  25% {
+    transform: rotateY(90deg) translateZ(var(--r)) rotateY(-90deg) translateY(0px);
+  }
+  37.5% {
+    transform: rotateY(135deg) translateZ(var(--r)) rotateY(-135deg) translateY(calc(var(--ring) * -0.7));
+  }
+  50% {
+    transform: rotateY(180deg) translateZ(var(--r)) rotateY(-180deg) translateY(calc(var(--ring) * -1));
+  }
+  62.5% {
+    transform: rotateY(225deg) translateZ(var(--r)) rotateY(-225deg) translateY(calc(var(--ring) * -0.7));
+  }
+  75% {
+    transform: rotateY(270deg) translateZ(var(--r)) rotateY(-270deg) translateY(0px);
+  }
+  87.5% {
+    transform: rotateY(315deg) translateZ(var(--r)) rotateY(-315deg) translateY(calc(var(--ring) * 0.7));
+  }
+  100% {
+    transform: rotateY(360deg) translateZ(var(--r)) rotateY(-360deg) translateY(var(--ring));
   }
 }
 
-.voronoiOrb {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  box-shadow: var(--shadow-lg);
-  transition: transform 0.4s var(--ease-out);
+@keyframes orbitFade {
+  0%,
+  12.5%,
+  87.5%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.9;
+  }
+  37.5%,
+  62.5% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
-.orbWrap:hover .voronoiOrb {
-  transform: scale(1.03);
+@keyframes bookFloat {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(10px);
+  }
 }
 
-.orbLabel {
-  position: absolute;
-  padding: 0.32rem 0.8rem;
-  border-radius: 99px;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  color: var(--kesar-ink);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  box-shadow: var(--shadow-card);
+@keyframes bookSway {
+  from {
+    transform: rotateX(-10deg) rotateY(16deg);
+  }
+  to {
+    transform: rotateX(-6deg) rotateY(30deg);
+  }
 }
 
-.orbLabel--1 {
-  top: 8%;
-  left: 2%;
+@keyframes bookShadow {
+  from {
+    transform: scale(0.8);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0.9;
+  }
 }
-.orbLabel--2 {
-  top: 14%;
-  right: -2%;
-}
-.orbLabel--3 {
-  bottom: 14%;
-  left: -2%;
-}
-.orbLabel--4 {
-  bottom: 8%;
-  right: 4%;
+
+/* Reduced motion: a still book with the words parked around it */
+@media (prefers-reduced-motion: reduce) {
+  .bookFloat,
+  .book,
+  .bookShadow,
+  .orbitWord,
+  .orbitWord__pill {
+    animation: none;
+  }
+
+  .orbitWord--1 {
+    transform: translate3d(calc(var(--r) * -0.85), calc(var(--bh) * -0.42), 60px);
+  }
+  .orbitWord--2 {
+    transform: translate3d(calc(var(--r) * 0.85), calc(var(--bh) * -0.18), 60px);
+  }
+  .orbitWord--3 {
+    transform: translate3d(calc(var(--r) * -0.8), calc(var(--bh) * 0.24), 60px);
+  }
+  .orbitWord--4 {
+    transform: translate3d(calc(var(--r) * 0.8), calc(var(--bh) * 0.46), 60px);
+  }
 }
 
 /* ================= EDITORIAL TABLE OF CONTENTS BY REGION ================= */
@@ -1772,8 +2067,37 @@ a:hover {
     grid-template-columns: 1fr;
   }
 
-  .orbWrap {
-    width: 280px;
-    height: 280px;
+  .bookStage {
+    --bw: 150px;
+    --bh: 196px;
+    --bt: 34px;
+    --r: 118px;
+    --ring: 118px;
+    width: 300px;
+    height: 330px;
+  }
+
+  .book__front {
+    gap: 0.4rem;
+    padding: 1.1rem 0.8rem;
+  }
+
+  .book__title {
+    font-size: 1.3rem;
+  }
+
+  .book__issue,
+  .book__sub {
+    font-size: 0.5rem;
+  }
+
+  .book__thali {
+    width: 36px;
+    height: 36px;
+  }
+
+  .orbitWord__pill {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
   }
 }
