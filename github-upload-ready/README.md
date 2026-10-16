@@ -1,23 +1,19 @@
 # The Living Table
-A warm, searchable digital food archive prototype. **All 10,000 recipes are procedurally generated sample placeholders**, not real records.
+A searchable digital archive of 500 real Indian recipes across 35 regional cuisines, presented as an editorial food magazine.
 
 ## Run locally (Node 18+)
 ```
 npm install
-npm run dev      # http://localhost:3000
-npm run build && npm start
+npm run dev                  # http://localhost:3000
+npm run build                # static export to out/
+node scripts/serve-out.mjs   # preview the built site
 ```
-No environment variables or API keys are needed (no .env.example required).
+No environment variables or API keys needed.
 
-## Deploy to Vercel
-Push to GitHub, then at vercel.com choose Add New, Project, import `sunny150407/the-living-table`, Deploy (Next.js is auto-detected).
+## How it works
+- **Recipes:** pipe-delimited lines (17 fields each) in `lib/recipes/*.ts` plus the `BASE` block in `lib/data.ts`, parsed into the `Recipe` type there. Filter options come straight from the data.
+- **Photos:** hotlinked from external food sites and blogs, listed per recipe in `lib/photo-manifest.json` with a credit link and a fallback image. If both fail, the card shows a monogram placeholder. Photos belong to their original sources; credits appear in each recipe popup.
+- **Refreshing photos:** `npm run photos` looks up recipes missing from the manifest (`--refresh` redoes all). It does not run during the build. A file at `public/photos/<recipe-slug>.jpg` replaces the external photo on the next run.
 
-## Replace content
-- Images: edit `lib/images.ts` (Unsplash photo IDs and `imageUrl()`); point it at your own storage/CDN later. Verify each Unsplash photo and credit before publishing.
-- Records: edit `lib/data.ts`. Replace `generateRecipes()` with real records or a database query; the `Recipe` type maps to a table.
-- Filter options live in `OPTIONS` in `lib/data.ts`.
-
-## Photos (automatic)
-`npm run photos` (also runs before each build) looks up a free-licence photo for every recipe and writes `lib/photo-manifest.json`.
-Options: `--retry` (re-try dishes with no photo), `--refresh` (redo all). Credits show in each recipe's popup.
-Your own file in `public/photos/<recipe-slug>.jpg` overrides the automatic one.
+## Deploy
+Static site: publish `out/`. On Netlify or Vercel, set the base (root) directory to `github-upload-ready`.
