@@ -17,3 +17,9 @@ No environment variables or API keys needed.
 
 ## Deploy
 Static site: publish `out/`. On Netlify or Vercel, set the base (root) directory to `github-upload-ready`.
+
+**GitHub Pages** (https://sunny150407.github.io/The-Living-Table-/) serves the site from a subpath, so build with the base path set, then publish `out/` plus an empty `.nojekyll` file to the `gh-pages` branch:
+```
+PAGES_BASE_PATH=/The-Living-Table- npm run build
+```
+One-time setup by the repo owner: Settings → Pages → Source: "Deploy from a branch", branch `gh-pages`, folder `/ (root)`.

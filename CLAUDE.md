@@ -37,7 +37,8 @@ cd github-upload-ready && npm install && npm run build
 - Dev server: `npm run dev` → http://localhost:3000
 - Build is a static export (`output: "export"`, unoptimized images) into `out/`. Netlify publishes `out/`.
 - Preview the export: `node scripts/serve-out.mjs` (`next start` does not work with static export).
-- Node 18+. No env vars or API keys.
+- GitHub Pages: build with `PAGES_BASE_PATH=/The-Living-Table- npm run build` (sets Next's `basePath`), then publish `out/` plus an empty `.nojekyll` to the orphan `gh-pages` branch. Never set the base path for Netlify or local builds.
+- Node 18+. No API keys; the only env var is the optional `PAGES_BASE_PATH`.
 
 ## Design language (keep it)
 - "Masala Market": light editorial magazine on warm paper (`--paper`), near-black ink headings (`--ink`), faint paper grain, a thin six-spice stripe (`--spice-stripe`) as the signature accent.
