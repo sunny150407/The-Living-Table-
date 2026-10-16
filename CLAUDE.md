@@ -2,8 +2,10 @@
 
 College project: a searchable archive of 500 real Indian recipes across 35 regional cuisines, styled as a colourful editorial food magazine. Single-page Next.js 14 site. It gets demoed live, so stability beats novelty.
 
+**Start of every session: read `HANDOFF.md`** for current status, decisions and the ordered work queue.
+
 ## Where the code lives
-All app code is in `github-upload-ready/`. The repo root holds only this file and `.claude/skills/`.
+All app code is in `github-upload-ready/`. The repo root holds only this file, `HANDOFF.md` and `.claude/skills/`.
 
 - `app/page.tsx`: the whole UI. Hero search, 13 filters, grid / editorial-list toggle, recipe popup (Escape closes it).
 - `app/book.tsx`: floating CSS-3D cookbook on the cover with "Ingredients / Recipe / Story / Emotion" orbiting it (pure CSS, pointer parallax, reduced-motion fallback).
