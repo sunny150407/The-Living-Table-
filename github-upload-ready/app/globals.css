@@ -1,20 +1,58 @@
 :root {
-  --bg-deep: #180e09;
-  --espresso: #24150e;
-  --espresso-2: #311d13;
-  --cocoa: #43291b;
-  --rust: #58351f;
-  --gold: #d4b483;
-  --gold-2: #c6a77b;
-  --gold-bright: #ebd0a4;
-  --cream: #faf5ef;
-  --cream-2: #f5ebda;
-  --tan: #e5d5bc;
-  --muted: #b8a086;
-  --border: rgba(212, 180, 131, 0.18);
-  --border-strong: rgba(212, 180, 131, 0.38);
-  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
-  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.42);
+  /* Paper & ink */
+  --paper: #fbf4e8;
+  --paper-2: #f5ebda;
+  --paper-3: #ecdfc8;
+  --surface: #ffffff;
+  --ink: #1f1a17;
+  --ink-2: #3a302a;
+  --muted: #5c5049;
+  --border: rgba(31, 26, 23, 0.12);
+  --border-strong: rgba(31, 26, 23, 0.24);
+
+  /* Spice accents: fill, text-safe ink, light tint */
+  --haldi: #e8a317;
+  --haldi-ink: #8a5a00;
+  --haldi-tint: #fbf0da;
+  --kesar: #e8601a;
+  --kesar-ink: #a8480d;
+  --kesar-tint: #fde4d6;
+  --mirchi: #d7263d;
+  --mirchi-ink: #b81d33;
+  --mirchi-tint: #f9dce0;
+  --gulabi: #e5487e;
+  --gulabi-ink: #b02a5b;
+  --gulabi-tint: #fbe2ea;
+  --neel: #2b3a8c;
+  --neel-ink: #2b3a8c;
+  --neel-tint: #dde0ed;
+  --kadi: #2e8b57;
+  --kadi-ink: #1f6b43;
+  --kadi-tint: #deece4;
+  --spice-stripe: linear-gradient(
+    90deg,
+    var(--haldi),
+    var(--kesar),
+    var(--mirchi),
+    var(--gulabi),
+    var(--neel),
+    var(--kadi)
+  );
+
+  /* Section accent: each section overrides these */
+  --accent: var(--kesar);
+  --accent-ink: var(--kesar-ink);
+  --accent-tint: var(--kesar-tint);
+  --on-accent: var(--ink);
+
+  /* Course colour: cards and the popup override these */
+  --c: var(--accent);
+  --c-ink: var(--accent-ink);
+  --c-tint: var(--accent-tint);
+
+  --shadow-sm: 0 1px 2px rgba(31, 26, 23, 0.06);
+  --shadow-card: 0 1px 2px rgba(31, 26, 23, 0.05), 0 10px 28px rgba(31, 26, 23, 0.08);
+  --shadow-lg: 0 2px 6px rgba(31, 26, 23, 0.06), 0 24px 60px rgba(31, 26, 23, 0.14);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -26,8 +64,8 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--bg-deep);
-  color-scheme: dark;
+  background-color: var(--paper);
+  color-scheme: light;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -39,10 +77,10 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(1200px 650px at 18% 8%, rgba(212, 180, 131, 0.11), transparent 65%),
-    radial-gradient(1000px 600px at 85% 15%, rgba(88, 53, 31, 0.38), transparent 65%),
-    linear-gradient(180deg, #21130c 0%, #180e09 45%, #1d110b 100%);
-  color: var(--tan);
+    radial-gradient(1100px 620px at 8% 0%, color-mix(in srgb, var(--haldi) 14%, transparent), transparent 65%),
+    radial-gradient(1000px 600px at 92% 12%, color-mix(in srgb, var(--gulabi) 10%, transparent), transparent 65%),
+    var(--paper);
+  color: var(--ink-2);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   font-size: 16px;
   line-height: 1.65;
@@ -50,15 +88,21 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle magazine film grain overlay */
+/* Subtle paper grain overlay */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 999;
-  opacity: 0.032;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--haldi-tint);
+  color: var(--ink);
 }
 
 h1,
@@ -69,22 +113,22 @@ h4,
 .monogram,
 .ph__monogram {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  color: var(--cream);
+  color: var(--ink);
   letter-spacing: -0.015em;
 }
 
 a {
-  color: var(--gold);
+  color: var(--neel);
   text-decoration: none;
   transition: color 0.25s var(--ease-out);
 }
 
 a:hover {
-  color: var(--cream);
+  color: var(--mirchi-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--neel);
   outline-offset: 3px;
 }
 
@@ -102,15 +146,15 @@ a:hover {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-deep);
+  background: var(--paper);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--cocoa);
+  background: var(--paper-3);
   border-radius: 99px;
-  border: 2px solid var(--bg-deep);
+  border: 2px solid var(--paper);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-2);
+  background: var(--muted);
 }
 
 /* ================= STICKY TOPBAR ================= */
@@ -122,7 +166,7 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 2.2rem;
-  background: rgba(28, 16, 10, 0.82);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
@@ -131,12 +175,12 @@ a:hover {
 .topbar__brand {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--cream);
+  color: var(--ink);
   letter-spacing: 0.01em;
 }
 
 .topbar__brand em {
-  color: var(--gold);
+  color: var(--kesar);
   font-style: italic;
   font-weight: 600;
 }
@@ -151,8 +195,7 @@ a:hover {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.9;
+  color: var(--muted);
 }
 
 .topbar__nav {
@@ -164,24 +207,24 @@ a:hover {
   font-size: 0.82rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--tan);
+  color: var(--ink-2);
   padding: 0.3rem 0.6rem;
   border-radius: 99px;
   transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
 }
 
 .topbar__nav a:hover {
-  background: rgba(212, 180, 131, 0.14);
-  color: var(--cream);
+  background: var(--neel-tint);
+  color: var(--neel);
 }
 
 .topbar__progress {
   position: absolute;
   left: 0;
   bottom: -1px;
-  height: 2px;
+  height: 3px;
   width: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--cream), var(--gold));
+  background: var(--spice-stripe);
   transform-origin: 0 50%;
   transform: scaleX(0);
   transition: transform 0.12s linear;
@@ -194,7 +237,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent-ink);
 }
 
 .kickerSub {
@@ -208,32 +251,43 @@ a:hover {
   height: 54px;
   flex-shrink: 0;
   border-radius: 16px;
-  border: 1px solid var(--border-strong);
-  background: radial-gradient(circle at 30% 25%, rgba(212, 180, 131, 0.22), rgba(36, 21, 14, 0.9));
+  background: linear-gradient(135deg, var(--kesar), var(--mirchi));
   display: grid;
   place-items: center;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 10px 22px color-mix(in srgb, var(--kesar) 30%, transparent);
 }
 
 .monogram span {
   font-size: 1.55rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--surface);
 }
 
 /* ================= MAGAZINE COVER HERO ================= */
 .hero {
+  --accent: var(--kesar);
+  --accent-ink: var(--kesar-ink);
+  --accent-tint: var(--kesar-tint);
   position: relative;
   max-width: 1340px;
   margin: 1.6rem auto 0;
   padding: 3.5rem 2.8rem;
   border-radius: 32px;
   background:
-    radial-gradient(750px 480px at 82% 50%, rgba(212, 180, 131, 0.14), transparent 70%),
-    linear-gradient(135deg, rgba(54, 32, 21, 0.92) 0%, rgba(32, 18, 12, 0.96) 60%, rgba(24, 14, 9, 0.98) 100%);
+    radial-gradient(720px 460px at 84% 50%, color-mix(in srgb, var(--kesar) 16%, transparent), transparent 70%),
+    radial-gradient(520px 380px at 6% 0%, color-mix(in srgb, var(--haldi) 18%, transparent), transparent 70%),
+    var(--surface);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--spice-stripe);
 }
 
 .hero__grid {
@@ -254,19 +308,18 @@ a:hover {
   font-size: clamp(2.8rem, 5.6vw, 4.75rem);
   line-height: 1.04;
   margin: 0 0 1.1rem;
-  color: var(--cream);
-  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  color: var(--ink);
 }
 
 .hero__title em {
-  color: var(--gold);
+  color: var(--kesar);
   font-style: italic;
   font-weight: 600;
 }
 
 .lead {
   font-size: clamp(1.02rem, 1.35vw, 1.18rem);
-  color: var(--tan);
+  color: var(--ink-2);
   max-width: 58ch;
   margin: 0 0 1.8rem;
   line-height: 1.7;
@@ -281,23 +334,23 @@ a:hover {
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(20, 11, 7, 0.78);
+  background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: 99px;
   padding: 0.35rem 0.65rem 0.35rem 1.25rem;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-card);
   transition: border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 
 .searchBox:focus-within {
-  border-color: var(--gold);
-  box-shadow: 0 16px 40px rgba(212, 180, 131, 0.18), 0 0 0 3px rgba(212, 180, 131, 0.15);
+  border-color: var(--kesar);
+  box-shadow: var(--shadow-card), 0 0 0 4px var(--kesar-tint);
   transform: translateY(-1px);
 }
 
 .searchIcon {
   font-size: 1.25rem;
-  color: var(--gold);
+  color: var(--kesar-ink);
   margin-right: 0.7rem;
   user-select: none;
 }
@@ -306,7 +359,7 @@ a:hover {
   width: 100%;
   border: 0;
   background: transparent;
-  color: var(--cream);
+  color: var(--ink);
   font: inherit;
   font-size: 1rem;
   padding: 0.65rem 0.4rem;
@@ -314,12 +367,12 @@ a:hover {
 }
 
 .search::placeholder {
-  color: rgba(229, 213, 188, 0.52);
+  color: var(--muted);
 }
 
 .searchClear {
-  background: rgba(212, 180, 131, 0.16);
-  color: var(--gold);
+  background: var(--kesar-tint);
+  color: var(--kesar-ink);
   border: 1px solid var(--border);
   width: 34px;
   height: 34px;
@@ -332,8 +385,8 @@ a:hover {
 }
 
 .searchClear:hover {
-  background: var(--gold);
-  color: var(--bg-deep);
+  background: var(--kesar);
+  color: var(--ink);
 }
 
 .hero__stats {
@@ -343,21 +396,33 @@ a:hover {
 }
 
 .statPill {
+  --c-ink: var(--kesar-ink);
+  --c-tint: var(--kesar-tint);
   display: inline-flex;
   align-items: baseline;
   gap: 0.5rem;
   padding: 0.55rem 1.1rem;
   border-radius: 99px;
-  background: rgba(212, 180, 131, 0.09);
+  background: var(--c-tint);
   border: 1px solid var(--border);
   font-size: 0.85rem;
-  color: var(--tan);
+  color: var(--ink-2);
+}
+
+.statPill:nth-child(2) {
+  --c-ink: var(--neel-ink);
+  --c-tint: var(--neel-tint);
+}
+
+.statPill:nth-child(3) {
+  --c-ink: var(--kadi-ink);
+  --c-tint: var(--kadi-tint);
 }
 
 .statPill strong {
   font-family: var(--font-serif), Georgia, serif;
   font-size: 1.1rem;
-  color: var(--gold);
+  color: var(--c-ink);
 }
 
 /* ================= 3D VORONOI ORB CENTERPIECE ================= */
@@ -380,7 +445,7 @@ a:hover {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 180, 131, 0.34), rgba(88, 53, 31, 0.05) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--kesar) 34%, transparent), transparent 70%);
   filter: blur(24px);
   pointer-events: none;
 }
@@ -388,7 +453,7 @@ a:hover {
 .orbRing {
   position: absolute;
   border-radius: 50%;
-  border: 1px dashed rgba(212, 180, 131, 0.28);
+  border: 1px dashed color-mix(in srgb, var(--kesar) 45%, transparent);
   pointer-events: none;
 }
 
@@ -400,7 +465,7 @@ a:hover {
 .orbRing--inner {
   inset: 22px;
   border-style: solid;
-  border-color: rgba(212, 180, 131, 0.16);
+  border-color: var(--border);
 }
 
 @keyframes spinSlow {
@@ -413,9 +478,7 @@ a:hover {
   width: 280px;
   height: 280px;
   border-radius: 50%;
-  box-shadow:
-    0 24px 50px rgba(0, 0, 0, 0.65),
-    inset 0 0 28px rgba(212, 180, 131, 0.25);
+  box-shadow: var(--shadow-lg);
   transition: transform 0.4s var(--ease-out);
 }
 
@@ -427,14 +490,13 @@ a:hover {
   position: absolute;
   padding: 0.32rem 0.8rem;
   border-radius: 99px;
-  background: rgba(30, 17, 11, 0.88);
+  background: var(--surface);
   border: 1px solid var(--border-strong);
-  color: var(--gold);
+  color: var(--kesar-ink);
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
 }
 
 .orbLabel--1 {
@@ -456,13 +518,17 @@ a:hover {
 
 /* ================= EDITORIAL TABLE OF CONTENTS BY REGION ================= */
 .tocSection {
+  --accent: var(--neel);
+  --accent-ink: var(--neel-ink);
+  --accent-tint: var(--neel-tint);
+  --on-accent: var(--surface);
   max-width: 1340px;
   margin: 2.2rem auto 0;
   padding: 2rem 2.4rem;
   border-radius: 28px;
   background:
-    radial-gradient(680px 300px at 88% 0%, rgba(212, 180, 131, 0.09), transparent 70%),
-    linear-gradient(180deg, rgba(40, 23, 15, 0.88), rgba(28, 16, 10, 0.94));
+    radial-gradient(680px 300px at 88% 0%, color-mix(in srgb, var(--neel) 9%, transparent), transparent 70%),
+    var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
@@ -490,15 +556,16 @@ a:hover {
 }
 
 .tocItem {
+  --c-ink: var(--neel-ink);
   display: flex;
   align-items: baseline;
   gap: 0.65rem;
   width: 100%;
   padding: 0.65rem 0.95rem;
   border-radius: 14px;
-  background: rgba(54, 32, 21, 0.45);
-  border: 1px solid rgba(212, 180, 131, 0.14);
-  color: var(--tan);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--ink-2);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -509,32 +576,54 @@ a:hover {
     color 0.2s var(--ease-out);
 }
 
+/* Chapter numbers cycle through the spice box */
+.tocItem:nth-child(6n + 2) {
+  --c-ink: var(--kesar-ink);
+}
+.tocItem:nth-child(6n + 3) {
+  --c-ink: var(--mirchi-ink);
+}
+.tocItem:nth-child(6n + 4) {
+  --c-ink: var(--kadi-ink);
+}
+.tocItem:nth-child(6n + 5) {
+  --c-ink: var(--gulabi-ink);
+}
+.tocItem:nth-child(6n + 6) {
+  --c-ink: var(--haldi-ink);
+}
+
 .tocItem:hover {
   transform: translateY(-2px);
-  background: rgba(74, 44, 29, 0.75);
-  border-color: var(--gold);
-  color: var(--cream);
+  background: var(--neel-tint);
+  border-color: var(--neel);
+  color: var(--ink);
 }
 
 .tocItem--all {
   grid-column: 1 / -1;
-  background: rgba(67, 41, 27, 0.65);
+  background: var(--neel-tint);
   border-color: var(--border-strong);
   padding: 0.8rem 1.15rem;
 }
 
 .tocItem--active {
-  background: linear-gradient(135deg, rgba(212, 180, 131, 0.24), rgba(198, 167, 123, 0.14));
-  border-color: var(--gold);
-  color: var(--cream);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(212, 180, 131, 0.35);
+  background: var(--neel);
+  border-color: var(--neel);
+  color: var(--surface);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--neel) 28%, transparent);
+}
+
+.tocItem--active:hover {
+  background: var(--neel);
+  color: var(--surface);
 }
 
 .tocItem__num {
   font-family: var(--font-serif), Georgia, serif;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--c-ink);
   letter-spacing: 0.06em;
   flex-shrink: 0;
 }
@@ -543,13 +632,13 @@ a:hover {
   font-family: var(--font-serif), Georgia, serif;
   font-size: 1.02rem;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--ink);
   white-space: nowrap;
 }
 
 .tocItem__dots {
   flex: 1;
-  border-bottom: 1px dotted rgba(212, 180, 131, 0.32);
+  border-bottom: 1px dotted var(--border-strong);
   margin: 0 0.25rem;
   min-width: 16px;
 }
@@ -559,23 +648,36 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gold);
-  background: rgba(20, 11, 7, 0.55);
-  border: 1px solid rgba(212, 180, 131, 0.22);
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 0.16rem 0.6rem;
   border-radius: 99px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
+.tocItem--active .tocItem__num,
+.tocItem--active .tocItem__name {
+  color: var(--surface);
+}
+
+.tocItem--active .tocItem__dots {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
 .tocItem--active .tocItem__count {
-  background: var(--gold);
-  color: var(--bg-deep);
-  border-color: var(--gold-bright);
+  background: var(--haldi);
+  color: var(--ink);
+  border-color: var(--haldi);
 }
 
 /* ================= MAIN ARCHIVE LAYOUT & SIDEBAR ================= */
 .layout {
+  --accent: var(--mirchi);
+  --accent-ink: var(--mirchi-ink);
+  --accent-tint: var(--mirchi-tint);
+  --on-accent: var(--surface);
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 2rem;
@@ -590,7 +692,7 @@ a:hover {
   top: 4.8rem;
   max-height: calc(100vh - 6rem);
   overflow-y: auto;
-  background: linear-gradient(180deg, rgba(44, 26, 17, 0.92), rgba(31, 18, 12, 0.95));
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 24px;
   padding: 1.4rem;
@@ -622,12 +724,12 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent-ink);
   margin-bottom: 0.5rem;
 }
 
 .filters details {
-  border-bottom: 1px solid rgba(212, 180, 131, 0.1);
+  border-bottom: 1px solid var(--border);
   padding: 0.25rem 0;
 }
 
@@ -636,7 +738,7 @@ a:hover {
   padding: 0.45rem 0.2rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--cream);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -650,7 +752,7 @@ a:hover {
 
 .filters summary::after {
   content: "+";
-  color: var(--gold);
+  color: var(--accent-ink);
   font-size: 1rem;
   font-weight: 400;
 }
@@ -662,8 +764,8 @@ a:hover {
 .facetCount {
   margin-left: auto;
   margin-right: 0.6rem;
-  background: var(--gold);
-  color: var(--bg-deep);
+  background: var(--accent);
+  color: var(--on-accent);
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.05rem 0.45rem;
@@ -683,24 +785,24 @@ a:hover {
   padding: 0.28rem 0.45rem;
   border-radius: 8px;
   font-size: 0.85rem;
-  color: var(--tan);
+  color: var(--ink-2);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
 .opt:hover {
-  background: rgba(212, 180, 131, 0.1);
-  color: var(--cream);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .opt--active {
-  background: rgba(212, 180, 131, 0.16);
-  color: var(--gold-bright);
+  background: var(--accent-tint);
+  color: var(--accent-ink);
   font-weight: 500;
 }
 
 .opt input[type="checkbox"] {
-  accent-color: var(--gold);
+  accent-color: var(--accent);
   width: 15px;
   height: 15px;
   cursor: pointer;
@@ -708,8 +810,8 @@ a:hover {
 
 /* ================= BUTTONS & CHIPS ================= */
 .btn {
-  background: rgba(67, 41, 27, 0.8);
-  color: var(--cream);
+  background: var(--surface);
+  color: var(--ink);
   border: 1px solid var(--border-strong);
   border-radius: 99px;
   padding: 0.55rem 1.15rem;
@@ -720,20 +822,22 @@ a:hover {
 }
 
 .btn:hover {
-  background: var(--gold);
-  color: var(--bg-deep);
-  border-color: var(--gold-bright);
+  background: var(--ink);
+  color: var(--surface);
+  border-color: var(--ink);
   transform: translateY(-1px);
 }
 
+/* Primary action: filled with the section accent */
 .btn--gold {
-  background: linear-gradient(135deg, var(--gold), var(--gold-2));
-  color: var(--bg-deep);
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
   font-weight: 600;
 }
 
 .btn--ghost {
-  background: rgba(212, 180, 131, 0.08);
+  background: var(--paper);
   border-color: var(--border);
 }
 
@@ -749,9 +853,10 @@ a:hover {
   justify-content: space-between;
   margin-bottom: 1.2rem;
   padding: 0.9rem 1.35rem;
-  background: rgba(36, 21, 14, 0.75);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
+  box-shadow: var(--shadow-sm);
 }
 
 .bar__left {
@@ -763,18 +868,18 @@ a:hover {
 .recordCount {
   margin: 0;
   font-size: 0.92rem;
-  color: var(--tan);
+  color: var(--ink-2);
 }
 
 .recordCount strong {
-  color: var(--gold);
+  color: var(--accent-ink);
   font-family: var(--font-serif), Georgia, serif;
   font-size: 1.1rem;
 }
 
 .viewToggle {
   display: inline-flex;
-  background: rgba(20, 11, 7, 0.65);
+  background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 99px;
   padding: 0.2rem;
@@ -793,8 +898,8 @@ a:hover {
 }
 
 .viewBtn--active {
-  background: var(--gold);
-  color: var(--bg-deep);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -810,9 +915,9 @@ a:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: rgba(212, 180, 131, 0.16);
-  color: var(--cream);
-  border: 1px solid var(--gold);
+  background: var(--accent-tint);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
   border-radius: 99px;
   padding: 0.32rem 0.85rem;
   cursor: pointer;
@@ -822,13 +927,80 @@ a:hover {
 }
 
 .chip:hover {
-  background: var(--gold);
-  color: var(--bg-deep);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .chip__x {
   font-size: 0.72rem;
   opacity: 0.8;
+}
+
+/* ================= COURSE COLOURS ================= */
+[data-course="Main Dish"] {
+  --c: var(--kesar);
+  --c-ink: var(--kesar-ink);
+  --c-tint: var(--kesar-tint);
+}
+[data-course="Dessert"] {
+  --c: var(--gulabi);
+  --c-ink: var(--gulabi-ink);
+  --c-tint: var(--gulabi-tint);
+}
+[data-course="Breakfast"],
+[data-course="Bread"],
+[data-course="Bread / Flatbread"] {
+  --c: var(--haldi);
+  --c-ink: var(--haldi-ink);
+  --c-tint: var(--haldi-tint);
+}
+[data-course="Appetizer"],
+[data-course="Street food"] {
+  --c: var(--mirchi);
+  --c-ink: var(--mirchi-ink);
+  --c-tint: var(--mirchi-tint);
+}
+[data-course="Side Dish"] {
+  --c: var(--kadi);
+  --c-ink: var(--kadi-ink);
+  --c-tint: var(--kadi-tint);
+}
+[data-course="Beverage"] {
+  --c: var(--neel);
+  --c-ink: var(--neel-ink);
+  --c-tint: var(--neel-tint);
+}
+
+/* Indian veg / non-veg mark: square outline with a filled dot */
+.vegMark {
+  --mark: var(--kadi);
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--mark);
+  border-radius: 3px;
+  background: var(--surface);
+}
+
+.vegMark::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mark);
+}
+
+.vegMark--nonveg {
+  --mark: var(--mirchi-ink);
+}
+
+.card__badges .vegMark {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
 }
 
 /* ================= 3D RECIPE CARDS & GRID ================= */
@@ -853,12 +1025,12 @@ a:hover {
 
 .card {
   position: relative;
-  background: linear-gradient(165deg, rgba(52, 31, 20, 0.92) 0%, rgba(32, 19, 12, 0.96) 100%);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-card);
   transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
   transition:
     transform 0.28s var(--ease-out),
@@ -870,10 +1042,10 @@ a:hover {
 }
 
 .card:hover {
-  border-color: var(--gold);
+  border-color: var(--c);
   box-shadow:
-    0 22px 48px rgba(0, 0, 0, 0.6),
-    0 0 28px rgba(212, 180, 131, 0.14);
+    0 2px 6px rgba(31, 26, 23, 0.06),
+    0 22px 44px color-mix(in srgb, var(--c) 22%, transparent);
 }
 
 .card__glare {
@@ -884,7 +1056,7 @@ a:hover {
   opacity: 0;
   background: radial-gradient(
     360px circle at var(--gx, 50%) var(--gy, 50%),
-    rgba(212, 180, 131, 0.16),
+    color-mix(in srgb, var(--c) 10%, transparent),
     transparent 65%
   );
   transition: opacity 0.3s var(--ease-out);
@@ -898,7 +1070,7 @@ a:hover {
   position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 2;
-  background: var(--espresso);
+  background: var(--paper-2);
 }
 
 .cards.list .card__media {
@@ -914,7 +1086,7 @@ a:hover {
   object-fit: cover;
   display: block;
   transition: transform 0.6s var(--ease-out), filter 0.4s var(--ease-out);
-  filter: contrast(1.03) saturate(1.05);
+  filter: saturate(1.06);
 }
 
 .card:hover img {
@@ -927,6 +1099,7 @@ a:hover {
   left: 0.75rem;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.4rem;
   z-index: 3;
 }
@@ -938,20 +1111,19 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
 }
 
 .badge--region {
-  background: rgba(24, 14, 9, 0.82);
-  color: var(--gold);
-  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
 }
 
 .badge--course {
-  background: rgba(67, 41, 27, 0.82);
-  color: var(--cream);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--c-tint);
+  color: var(--c-ink);
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
 }
 
 .card__num {
@@ -960,22 +1132,22 @@ a:hover {
   right: 0.75rem;
   padding: 0.15rem 0.55rem;
   border-radius: 99px;
-  background: rgba(20, 11, 7, 0.76);
+  background: var(--surface);
   border: 1px solid var(--border);
   font-family: var(--font-serif), Georgia, serif;
   font-size: 0.72rem;
-  color: var(--gold);
+  color: var(--ink-2);
   z-index: 3;
 }
 
-/* Ornamental Monogram Placeholder when photo isn't loaded yet */
+/* Colourful monogram tile when a photo is missing or fails */
 .ph {
   width: 100%;
   height: 100%;
   aspect-ratio: 3 / 2;
   background:
-    radial-gradient(circle at 30% 25%, rgba(212, 180, 131, 0.2), transparent 65%),
-    linear-gradient(135deg, #382115 0%, #22130c 100%);
+    radial-gradient(circle at 30% 25%, var(--surface), transparent 60%),
+    linear-gradient(135deg, var(--c-tint) 0%, color-mix(in srgb, var(--c) 28%, var(--surface)) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -985,7 +1157,7 @@ a:hover {
 }
 
 .ph__inner {
-  border: 1px solid rgba(212, 180, 131, 0.26);
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
   border-radius: 16px;
   padding: 1rem 1.2rem;
   width: 100%;
@@ -994,13 +1166,13 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(24, 14, 9, 0.35);
+  background: color-mix(in srgb, var(--surface) 45%, transparent);
 }
 
 .ph__monogram {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--c-ink);
   line-height: 1.1;
   margin-bottom: 0.25rem;
 }
@@ -1009,7 +1181,7 @@ a:hover {
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream);
+  color: var(--ink);
 }
 
 .ph__sub {
@@ -1030,7 +1202,7 @@ a:hover {
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--c-ink);
 }
 
 .cb h3 {
@@ -1042,19 +1214,18 @@ a:hover {
 .link {
   all: unset;
   cursor: pointer;
-  color: var(--cream);
+  color: var(--ink);
   transition: color 0.2s;
 }
 
 .card:hover .link {
-  color: var(--gold-bright);
+  color: var(--c-ink);
 }
 
 .cb__excerpt {
   margin: 0 0 1.1rem;
   font-size: 0.88rem;
-  color: var(--tan);
-  opacity: 0.9;
+  color: var(--ink-2);
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
@@ -1065,7 +1236,7 @@ a:hover {
 .cb__footer {
   margin-top: auto;
   padding-top: 0.75rem;
-  border-top: 1px solid rgba(212, 180, 131, 0.12);
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1083,7 +1254,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--c-ink);
   white-space: nowrap;
 }
 
@@ -1096,9 +1267,9 @@ a:hover {
 
 .tag {
   display: inline-block;
-  background: rgba(212, 180, 131, 0.12);
+  background: var(--paper);
   border: 1px solid var(--border);
-  color: var(--tan);
+  color: var(--ink-2);
   border-radius: 99px;
   padding: 0.2rem 0.75rem;
   font-size: 0.76rem;
@@ -1108,7 +1279,7 @@ a:hover {
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;
-  background: rgba(36, 21, 14, 0.7);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 24px;
 }
@@ -1116,7 +1287,7 @@ a:hover {
 .sentinel {
   text-align: center;
   padding: 2.5rem;
-  color: var(--gold);
+  color: var(--accent-ink);
   font-family: var(--font-serif), Georgia, serif;
   font-style: italic;
 }
@@ -1129,9 +1300,7 @@ a:hover {
 }
 
 .about__card {
-  background:
-    radial-gradient(600px 320px at 50% 0%, rgba(212, 180, 131, 0.12), transparent 70%),
-    linear-gradient(180deg, rgba(46, 27, 18, 0.92), rgba(28, 16, 10, 0.96));
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 28px;
   padding: 3rem 2.5rem;
@@ -1153,16 +1322,16 @@ a:hover {
 .about__card p {
   max-width: 66ch;
   margin: 0 auto 1rem;
-  color: var(--tan);
+  color: var(--ink-2);
 }
 
 /* ================= MAGAZINE SPREAD MODAL ================= */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12, 6, 4, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(31, 26, 23, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -1172,15 +1341,28 @@ a:hover {
 }
 
 .modal {
+  --accent: var(--haldi);
+  --accent-ink: var(--haldi-ink);
+  --accent-tint: var(--haldi-tint);
+  position: relative;
+  overflow: hidden;
   background:
-    radial-gradient(900px 450px at 15% 0%, rgba(212, 180, 131, 0.12), transparent 65%),
-    linear-gradient(180deg, #2b1910 0%, #1e110b 100%);
-  border: 1px solid var(--border-strong);
+    radial-gradient(900px 420px at 12% 0%, color-mix(in srgb, var(--haldi) 14%, transparent), transparent 65%),
+    var(--surface);
+  border: 1px solid var(--border);
   border-radius: 30px;
   max-width: 1060px;
   width: 100%;
   padding: 2.2rem 2.6rem 2.6rem;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 30px 80px rgba(31, 26, 23, 0.3);
+}
+
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--spice-stripe);
 }
 
 .modal__topbar {
@@ -1208,6 +1390,17 @@ a:hover {
   margin-bottom: 2rem;
 }
 
+.modal__kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Popup labels follow the dish's course colour */
+.modal .kicker {
+  color: var(--c-ink);
+}
+
 .modal__title {
   font-size: clamp(2rem, 3.8vw, 3rem);
   line-height: 1.08;
@@ -1221,16 +1414,16 @@ a:hover {
 }
 
 .modal__byline strong {
-  color: var(--cream);
+  color: var(--ink);
 }
 
 .modal__story {
   margin: 0;
   padding: 1.25rem 1.5rem;
-  border-left: 3px solid var(--gold);
-  background: rgba(20, 11, 7, 0.55);
+  border-left: 4px solid var(--haldi);
+  background: var(--haldi-tint);
   border-radius: 0 18px 18px 0;
-  color: var(--cream-2);
+  color: var(--ink-2);
   font-size: 0.98rem;
   line-height: 1.75;
 }
@@ -1264,7 +1457,7 @@ a:hover {
   gap: 0.85rem;
   margin: 0 0 2.2rem;
   padding: 1.25rem;
-  background: rgba(20, 11, 7, 0.55);
+  background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 22px;
 }
@@ -1278,14 +1471,14 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--c-ink);
   margin-bottom: 0.2rem;
 }
 
 .dl dd {
   margin: 0;
   font-size: 0.92rem;
-  color: var(--cream);
+  color: var(--ink);
   font-weight: 500;
 }
 
@@ -1323,20 +1516,21 @@ a:hover {
   gap: 0.75rem;
   padding: 0.65rem 0.9rem;
   border-radius: 14px;
-  background: rgba(44, 26, 17, 0.75);
+  background: var(--surface);
   border: 1px solid var(--border);
   cursor: pointer;
   font-size: 0.92rem;
-  color: var(--cream);
+  color: var(--ink);
   transition: all 0.2s var(--ease-out);
 }
 
 .ingList__item:hover {
-  border-color: var(--gold);
+  border-color: var(--kadi);
 }
 
 .ingList__item--done {
-  opacity: 0.55;
+  background: var(--paper);
+  color: var(--muted);
   text-decoration: line-through;
 }
 
@@ -1344,17 +1538,17 @@ a:hover {
   width: 20px;
   height: 20px;
   border-radius: 6px;
-  border: 1px solid var(--gold);
+  border: 1.5px solid var(--kadi);
   display: grid;
   place-items: center;
   font-size: 0.75rem;
-  color: var(--bg-deep);
+  color: var(--surface);
   background: transparent;
   flex-shrink: 0;
 }
 
 .ingList__item--done .ingCheck {
-  background: var(--gold);
+  background: var(--kadi);
 }
 
 .stepList {
@@ -1367,23 +1561,47 @@ a:hover {
 }
 
 .stepList__item {
+  --c-ink: var(--kesar-ink);
+  --c-tint: var(--kesar-tint);
   display: grid;
   grid-template-columns: 42px 1fr;
   gap: 0.9rem;
   align-items: start;
   padding: 1rem 1.2rem;
   border-radius: 18px;
-  background: rgba(44, 26, 17, 0.55);
+  background: var(--paper);
   border: 1px solid var(--border);
+}
+
+/* Step numbers cycle through the spice box */
+.stepList__item:nth-child(6n + 2) {
+  --c-ink: var(--mirchi-ink);
+  --c-tint: var(--mirchi-tint);
+}
+.stepList__item:nth-child(6n + 3) {
+  --c-ink: var(--gulabi-ink);
+  --c-tint: var(--gulabi-tint);
+}
+.stepList__item:nth-child(6n + 4) {
+  --c-ink: var(--neel-ink);
+  --c-tint: var(--neel-tint);
+}
+.stepList__item:nth-child(6n + 5) {
+  --c-ink: var(--kadi-ink);
+  --c-tint: var(--kadi-tint);
+}
+.stepList__item:nth-child(6n + 6) {
+  --c-ink: var(--haldi-ink);
+  --c-tint: var(--haldi-tint);
 }
 
 .stepNum {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  background: rgba(212, 180, 131, 0.15);
-  border: 1px solid var(--border-strong);
-  color: var(--gold);
+  background: var(--c-tint);
+  border: 1px solid color-mix(in srgb, var(--c-ink) 25%, transparent);
+  color: var(--c-ink);
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 700;
   font-size: 0.92rem;
@@ -1393,7 +1611,7 @@ a:hover {
 
 .stepList__item p {
   margin: 0;
-  color: var(--cream-2);
+  color: var(--ink-2);
   font-size: 0.96rem;
   line-height: 1.68;
 }
@@ -1441,7 +1659,7 @@ a:hover {
     max-height: 82vh;
     z-index: 90;
     border-radius: 28px 28px 0 0;
-    box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 -20px 50px rgba(31, 26, 23, 0.25);
   }
 
   .filters.show {

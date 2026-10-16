@@ -1,6 +1,6 @@
 # The Living Table
 
-College project: a searchable archive of 500 real Indian recipes across 35 regional cuisines, styled as a dark editorial food magazine. Single-page Next.js 14 site. It gets demoed live, so stability beats novelty.
+College project: a searchable archive of 500 real Indian recipes across 35 regional cuisines, styled as a colourful editorial food magazine. Single-page Next.js 14 site. It gets demoed live, so stability beats novelty.
 
 ## Where the code lives
 All app code is in `github-upload-ready/`. The repo root holds only this file and `.claude/skills/`.
@@ -40,16 +40,19 @@ cd github-upload-ready && npm install && npm run build
 - Node 18+. No env vars or API keys.
 
 ## Design language (keep it)
-- Dark editorial magazine: espresso and cocoa backgrounds, gold accents, cream headings, faint film grain.
+- "Masala Market": light editorial magazine on warm paper (`--paper`), near-black ink headings (`--ink`), faint paper grain, a thin six-spice stripe (`--spice-stripe`) as the signature accent.
+- Six spice accents, each with a fill, a text-safe `-ink` and a light `-tint`: `--haldi` (turmeric), `--kesar` (saffron), `--mirchi` (chilli), `--gulabi` (rose), `--neel` (indigo), `--kadi` (curry leaf). Only `-ink` variants (and `--neel`) are safe for small text; fills are for large text, backgrounds and marks.
+- Each section sets `--accent`/`--accent-ink`/`--accent-tint`: hero saffron, contents indigo, archive chilli, popup turmeric. Cards and the popup set `--c`/`--c-ink`/`--c-tint` from `data-course` (course colours live in `globals.css`).
+- Cards show the Indian veg/non-veg mark (green if dietary has Vegetarian or Vegan, red otherwise).
 - Playfair Display (`--font-serif`) for headings, Inter (`--font-sans`) for body and UI.
-- Use the `:root` tokens (`--gold`, `--cream`, `--espresso`, `--border`, `--ease-out`, ...). No new hard-coded colours.
+- Use the `:root` tokens. No new hard-coded colours. Check WCAG AA contrast for any new text/background pair.
 - Motion is quiet: `var(--ease-out)`, roughly 0.2 to 0.6s. Respect `prefers-reduced-motion`.
 - Responsive breakpoints: 980px and 600px.
 - No new UI libraries, icon packs, or font families.
 
 ## Rules
 - Always run `npm run build` in `github-upload-ready/` before committing. Never commit a broken build.
-- Keep the existing visual style. Refine it, don't redesign it.
+- Keep the Masala Market visual style. Refine it, don't redesign it.
 - Use the `apple-design` skill for motion and interaction work.
 - Use the `ui-ux-pro-max` skill for UX, accessibility, and layout checks.
 - Keep the recipe count in sync where it is hard-coded: `app/layout.tsx` metadata, the search placeholder in `app/page.tsx`, the README.

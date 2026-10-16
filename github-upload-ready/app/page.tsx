@@ -101,6 +101,19 @@ function Photo({ r, w, h, credit }: { r: Recipe; w: number; h: number; credit?: 
 
 const vals = (r: Recipe, k: keyof Recipe) => ([] as string[]).concat(r[k] as string | string[]);
 
+// Indian food-label mark: green for vegetarian/vegan, red for everything else (meat, fish, egg)
+function VegMark({ r }: { r: Recipe }) {
+  const veg = r.dietary.some((d) => d === "Vegetarian" || d === "Vegan");
+  return (
+    <span
+      className={`vegMark ${veg ? "" : "vegMark--nonveg"}`}
+      role="img"
+      aria-label={veg ? "Vegetarian" : "Non-vegetarian"}
+      title={veg ? "Vegetarian" : "Non-vegetarian"}
+    />
+  );
+}
+
 export default function Home() {
   const all = useMemo(() => generateRecipes(500), []);
   const hay = useMemo(
@@ -502,6 +515,7 @@ export default function Home() {
                 <li
                   key={r.id}
                   className="card"
+                  data-course={r.course}
                   onMouseMove={handleCardMove}
                   onMouseLeave={handleCardLeave}
                   onClick={() => setOpen(r)}
@@ -510,6 +524,7 @@ export default function Home() {
                   <div className="card__media">
                     <Photo r={r} w={480} h={320} />
                     <div className="card__badges">
+                      <VegMark r={r} />
                       <span className="badge badge--region">{r.region}</span>
                       <span className="badge badge--course">{r.course}</span>
                     </div>
@@ -578,7 +593,7 @@ export default function Home() {
           aria-labelledby="mt"
           onClick={() => setOpen(null)}
         >
-          <article className="modal" onClick={(e) => e.stopPropagation()}>
+          <article className="modal" data-course={open.course} onClick={(e) => e.stopPropagation()}>
             <div className="modal__topbar">
               <button className="btn btn--ghost" autoFocus onClick={() => setOpen(null)}>
                 ← Back to Archive
@@ -599,8 +614,11 @@ export default function Home() {
 
             <div className="modal__hero">
               <div className="modal__titleCol">
-                <p className="kicker">
-                  {open.region} Tradition · {open.course} · {open.era}
+                <p className="kicker modal__kicker">
+                  <VegMark r={open} />
+                  <span>
+                    {open.region} Tradition · {open.course} · {open.era}
+                  </span>
                 </p>
                 <h2 id="mt" className="modal__title">
                   {open.title}
