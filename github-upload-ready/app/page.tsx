@@ -190,6 +190,20 @@ export default function Home() {
     };
   }, [open]);
 
+  // Mobile filter sheet: Escape closes it and the page behind stops scrolling
+  useEffect(() => {
+    if (!panel) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPanel(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [panel]);
+
   const results = useMemo(() => {
     const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
     return all.filter(
@@ -445,6 +459,7 @@ export default function Home() {
 
         {/* MAIN ARCHIVE LAYOUT */}
         <section id="archive" className="layout" aria-label="Archive">
+          {panel && <div className="sheetScrim" aria-hidden="true" onClick={() => setPanel(false)} />}
           <aside className={`filters ${panel ? "show" : ""}`} aria-label="Filters">
             <div className="filters__head">
               <div>

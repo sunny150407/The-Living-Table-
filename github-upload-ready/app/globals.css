@@ -74,6 +74,11 @@ html {
   }
 }
 
+/* Anchor jumps land below the sticky topbar */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
 body {
   margin: 0;
   background:
@@ -633,7 +638,7 @@ a:hover {
   font-size: 1.02rem;
   font-weight: 600;
   color: var(--ink);
-  white-space: nowrap;
+  min-width: 0;
 }
 
 .tocItem__dots {
@@ -1218,6 +1223,13 @@ a:hover {
   transition: color 0.2s;
 }
 
+/* `all: unset` above wipes the global focus ring, so restore it */
+.link:focus-visible {
+  outline: 2px solid var(--neel);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 .card:hover .link {
   color: var(--c-ink);
 }
@@ -1625,6 +1637,25 @@ a:hover {
   display: none;
 }
 
+/* Touch screens get 44px tap targets */
+@media (pointer: coarse) {
+  .btn--small,
+  .chip,
+  .viewBtn,
+  .opt,
+  .filters summary {
+    min-height: 44px;
+  }
+
+  .btn--small,
+  .chip,
+  .viewBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 /* ================= RESPONSIVE BREAKPOINTS ================= */
 @media (max-width: 980px) {
   .hero__grid,
@@ -1638,7 +1669,7 @@ a:hover {
     margin: 1rem 0.8rem 0;
   }
 
-  .regionRibbon {
+  .tocSection {
     margin: 1.5rem 0.8rem 0;
     padding: 1.2rem 1.25rem;
   }
@@ -1666,6 +1697,24 @@ a:hover {
     display: block;
   }
 
+  /* Close button stays reachable at the bottom of the sheet */
+  .filters .btn--gold {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+    min-height: 48px;
+    box-shadow: 0 0 0 12px var(--surface);
+  }
+
+  .sheetScrim {
+    position: fixed;
+    inset: 0;
+    z-index: 89;
+    background: rgba(31, 26, 23, 0.45);
+  }
+
   .topbar__chapter {
     display: none;
   }
@@ -1682,6 +1731,41 @@ a:hover {
 @media (max-width: 600px) {
   .topbar {
     padding: 0.75rem 1rem;
+  }
+
+  .topbar__brand {
+    font-size: 1.1rem;
+    white-space: nowrap;
+  }
+
+  .topbar__nav {
+    gap: 0.25rem;
+  }
+
+  .topbar__nav a {
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 0.55rem;
+  }
+
+  .bar {
+    flex-wrap: wrap;
+    padding: 0.8rem 1rem;
+  }
+
+  .bar__left,
+  .bar__right,
+  .viewToggle {
+    width: 100%;
+  }
+
+  .recordCount {
+    font-size: 0.85rem;
+  }
+
+  .viewBtn {
+    flex: 1;
+    white-space: nowrap;
   }
 
   .cards {
