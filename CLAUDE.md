@@ -56,7 +56,7 @@ cd github-upload-ready && npm install && npm run build
 
 ## Rules
 - Always run `npm run build` in `github-upload-ready/` before committing. Never commit a broken build.
-- Keep the Masala Market visual style. Refine it, don't redesign it.
+- Keep the Ledger visual style. Refine it, don't redesign it.
 - Use the `apple-design` skill for motion and interaction work.
 - Use the `ui-ux-pro-max` skill for UX, accessibility, and layout checks.
 - Keep the recipe count in sync where it is hard-coded: `app/layout.tsx` metadata, the search placeholder in `app/page.tsx`, the README.
