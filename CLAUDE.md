@@ -1,6 +1,6 @@
 # The Living Table
 
-College project: a searchable archive of 500 real Indian recipes across 35 regional cuisines, styled as a colourful editorial food magazine. Single-page Next.js 14 site. It gets demoed live, so stability beats novelty.
+College project: a searchable archive of 500 real Indian recipes across 35 regional cuisines, styled as a handwritten bahi-khata register on handmade paper. Single-page Next.js 14 site. It gets demoed live, so stability beats novelty.
 
 **Start of every session: read `HANDOFF.md`** for current status, decisions and the ordered work queue.
 
@@ -43,9 +43,10 @@ cd github-upload-ready && npm install && npm run build
 - Node 18+. No API keys; the only env var is the optional `PAGES_BASE_PATH`.
 
 ## Design language (keep it)
-- "Masala Market": light editorial magazine on warm paper (`--paper`), near-black ink headings (`--ink`), faint paper grain, a thin six-spice stripe (`--spice-stripe`) as the signature accent.
-- Six spice accents, each with a fill, a text-safe `-ink` and a light `-tint`: `--haldi` (turmeric), `--kesar` (saffron), `--mirchi` (chilli), `--gulabi` (rose), `--neel` (indigo), `--kadi` (curry leaf). Only `-ink` variants (and `--neel`) are safe for small text; fills are for large text, backgrounds and marks.
-- Each section sets `--accent`/`--accent-ink`/`--accent-tint`: hero saffron, contents indigo, archive chilli, popup turmeric. Cards and the popup set `--c`/`--c-ink`/`--c-tint` from `data-course` (course colours live in `globals.css`).
+- "Ledger": a handwritten bahi-khata register on handmade khadi paper. Panels are sheets of `--surface` and the page is `--paper`, both under the `--khadi` texture (mottled tone, short fibres, specks), with faint paper grain on top.
+- Register inks: `--blue` ballpoint (the lead), `--violet` stamp pad, `--red` correction pen, `--green` pen and `--hl` highlighter. Small text uses the `-ink` variants or `--blue`/`--violet`/`--green`. `--hl` is only a fill, with `--ink` text on it.
+- Print, not app: no gradients, glows, coloured shadows or pills. Corners are 2–4px. Badges, orbit words and the "T" seal are rubber stamps (the `--stamp` mask). "Table" gets the highlighter swipe (`--swipe`). The active contents row is highlighted. The cover book is red bahi-khata cloth (`--bahi`) tied with a gold cord (`--cord`). No ruled lines (Om's call).
+- The old spice names (`--haldi`, `--kesar`, `--mirchi`, `--gulabi`, `--neel`, `--kadi`, each with `-ink`/`-tint`) still drive sections (`--accent*`) and course colours (`--c*` from `data-course`), but they now point at the inks. Change the inks rather than that mapping.
 - Cards show the Indian veg/non-veg mark (green if dietary has Vegetarian or Vegan, red otherwise).
 - Playfair Display (`--font-serif`) for headings, Inter (`--font-sans`) for body and UI.
 - Use the `:root` tokens. No new hard-coded colours. Check WCAG AA contrast for any new text/background pair.

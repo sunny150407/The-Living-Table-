@@ -263,8 +263,6 @@ export default function Home() {
     const ry = (px - 0.5) * 11;
     el.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
     el.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
-    el.style.setProperty("--gx", `${(px * 100).toFixed(1)}%`);
-    el.style.setProperty("--gy", `${(py * 100).toFixed(1)}%`);
   };
 
   const handleCardLeave = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -535,7 +533,6 @@ export default function Home() {
                   onMouseLeave={handleCardLeave}
                   onClick={() => setOpen(r)}
                 >
-                  <div className="card__glare" aria-hidden="true" />
                   <div className="card__media">
                     <Photo r={r} w={480} h={320} />
                     <div className="card__badges">

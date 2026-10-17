@@ -38,7 +38,6 @@ export default function Book() {
 
   return (
     <div ref={ref} className="bookStage" aria-hidden="true">
-      <div className="bookGlow" />
       <div className="bookShadow" />
       <div className="bookScene">
         <div className="bookFloat">

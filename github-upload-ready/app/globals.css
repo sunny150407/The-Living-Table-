@@ -1,58 +1,69 @@
 :root {
-  /* Paper & ink */
-  --paper: #fbf4e8;
-  --paper-2: #f5ebda;
-  --paper-3: #ecdfc8;
-  --surface: #ffffff;
-  --ink: #1f1a17;
-  --ink-2: #3a302a;
-  --muted: #5c5049;
-  --border: rgba(31, 26, 23, 0.12);
-  --border-strong: rgba(31, 26, 23, 0.24);
+  /* Handmade paper and ink */
+  --paper: #f2ebdc;
+  --paper-2: #e9e0cd;
+  --paper-3: #dcd0b8;
+  --surface: #f8f3e8;
+  --ink: #1a1f33;
+  --ink-2: #33384a;
+  --muted: #4f535e;
+  --border: rgba(26, 31, 51, 0.16);
+  --border-strong: rgba(26, 31, 51, 0.32);
 
-  /* Spice accents: fill, text-safe ink, light tint */
-  --haldi: #e8a317;
-  --haldi-ink: #8a5a00;
-  --haldi-tint: #fbf0da;
-  --kesar: #e8601a;
-  --kesar-ink: #a8480d;
-  --kesar-tint: #fde4d6;
-  --mirchi: #d7263d;
-  --mirchi-ink: #b81d33;
-  --mirchi-tint: #f9dce0;
-  --gulabi: #e5487e;
-  --gulabi-ink: #b02a5b;
-  --gulabi-tint: #fbe2ea;
-  --neel: #2b3a8c;
-  --neel-ink: #2b3a8c;
-  --neel-tint: #dde0ed;
-  --kadi: #2e8b57;
-  --kadi-ink: #1f6b43;
-  --kadi-tint: #deece4;
-  --spice-stripe: linear-gradient(
-    90deg,
-    var(--haldi),
-    var(--kesar),
-    var(--mirchi),
-    var(--gulabi),
-    var(--neel),
-    var(--kadi)
-  );
+  /* Register inks: ballpoint, stamp pad, correction pen, green pen, highlighter */
+  --blue: #2340a0;
+  --violet: #5b3c99;
+  --red: #c0362c;
+  --red-ink: #a02c23;
+  --rust: #a8432a;
+  --rust-ink: #93391f;
+  --green: #19663f;
+  --hl: #ffe45c;
+  --hl-ink: #665500;
+
+  /* Bahi-khata cover: red cloth tied with a gold cord */
+  --bahi: #8e1f1a;
+  --cord: #c9a13b;
+
+  /* Course and section colours map onto the inks: fill, text-safe ink, light tint */
+  --haldi: var(--hl);
+  --haldi-ink: var(--hl-ink);
+  --haldi-tint: color-mix(in srgb, var(--hl) 40%, var(--surface));
+  --kesar: var(--red);
+  --kesar-ink: var(--red-ink);
+  --kesar-tint: color-mix(in srgb, var(--red) 8%, var(--surface));
+  --mirchi: var(--rust);
+  --mirchi-ink: var(--rust-ink);
+  --mirchi-tint: color-mix(in srgb, var(--rust) 8%, var(--surface));
+  --gulabi: var(--violet);
+  --gulabi-ink: var(--violet);
+  --gulabi-tint: color-mix(in srgb, var(--violet) 8%, var(--surface));
+  --neel: var(--blue);
+  --neel-ink: var(--blue);
+  --neel-tint: color-mix(in srgb, var(--blue) 8%, var(--surface));
+  --kadi: var(--green);
+  --kadi-ink: var(--green);
+  --kadi-tint: color-mix(in srgb, var(--green) 8%, var(--surface));
 
   /* Section accent: each section overrides these */
   --accent: var(--kesar);
   --accent-ink: var(--kesar-ink);
   --accent-tint: var(--kesar-tint);
-  --on-accent: var(--ink);
+  --on-accent: var(--surface);
 
   /* Course colour: cards and the popup override these */
   --c: var(--accent);
   --c-ink: var(--accent-ink);
   --c-tint: var(--accent-tint);
 
-  --shadow-sm: 0 1px 2px rgba(31, 26, 23, 0.06);
-  --shadow-card: 0 1px 2px rgba(31, 26, 23, 0.05), 0 10px 28px rgba(31, 26, 23, 0.08);
-  --shadow-lg: 0 2px 6px rgba(31, 26, 23, 0.06), 0 24px 60px rgba(31, 26, 23, 0.14);
+  /* Print textures: handmade khadi sheet, rubber-stamp ink, highlighter swipe */
+  --khadi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E %3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.009' numOctaves='4' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .2 .3 0 0 0 -.1'/%3E%3C/filter%3E %3Crect width='100%25' height='100%25' filter='url%28%23m%29'/%3E %3Cfilter id='f1' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.022 .24' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .33 0 0 0 0 .2 2.0 0 0 0 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f1%29'/%3E%3Cfilter id='f2' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.24 .022' numOctaves='2' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .33 0 0 0 0 .2 2.0 0 0 0 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f2%29'/%3E%3Cfilter id='f3' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.12 .12' numOctaves='2' seed='31' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .33 0 0 0 0 .2 2.0 0 0 0 -1.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f3%29'/%3E %3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='2' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .22 0 0 0 0 .14 7 0 0 0 -5.1'/%3E%3C/filter%3E %3Crect width='100%25' height='100%25' filter='url%28%23s%29' opacity='.45'/%3E %3C/svg%3E") 0 0 / 420px 420px;
+  --stamp: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='70'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -4 3.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E") 0 0 / 140px 70px;
+  --swipe: linear-gradient(176deg, transparent 52%, var(--hl) 52% 90%, transparent 90%);
+
+  --shadow-sm: none;
+  --shadow-card: 0 1px 2px rgba(26, 31, 51, 0.06);
+  --shadow-lg: 0 1px 3px rgba(26, 31, 51, 0.08);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -81,10 +92,7 @@ section[id] {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(1100px 620px at 8% 0%, color-mix(in srgb, var(--haldi) 14%, transparent), transparent 65%),
-    radial-gradient(1000px 600px at 92% 12%, color-mix(in srgb, var(--gulabi) 10%, transparent), transparent 65%),
-    var(--paper);
+  background: var(--khadi), var(--paper);
   color: var(--ink-2);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -106,7 +114,7 @@ body::after {
 }
 
 ::selection {
-  background: var(--haldi-tint);
+  background: var(--hl);
   color: var(--ink);
 }
 
@@ -185,9 +193,11 @@ a:hover {
 }
 
 .topbar__brand em {
-  color: var(--kesar);
+  color: var(--blue);
   font-style: italic;
   font-weight: 600;
+  background: var(--swipe);
+  padding: 0 0.08em;
 }
 
 .topbar__meta {
@@ -214,7 +224,7 @@ a:hover {
   text-transform: uppercase;
   color: var(--ink-2);
   padding: 0.3rem 0.6rem;
-  border-radius: 99px;
+  border-radius: 2px;
   transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
 }
 
@@ -227,9 +237,9 @@ a:hover {
   position: absolute;
   left: 0;
   bottom: -1px;
-  height: 3px;
+  height: 2px;
   width: 100%;
-  background: var(--spice-stripe);
+  background: var(--red);
   transform-origin: 0 50%;
   transform: scaleX(0);
   transition: transform 0.12s linear;
@@ -251,21 +261,25 @@ a:hover {
   color: var(--muted);
 }
 
+/* Round violet seal, stamped slightly crooked */
 .monogram {
   width: 54px;
   height: 54px;
   flex-shrink: 0;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--kesar), var(--mirchi));
+  border-radius: 50%;
+  border: 2px solid var(--violet);
   display: grid;
   place-items: center;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 10px 22px color-mix(in srgb, var(--kesar) 30%, transparent);
+  box-shadow: inset 0 0 0 3px var(--surface), inset 0 0 0 4.5px var(--violet);
+  transform: rotate(-10deg);
+  -webkit-mask: var(--stamp);
+  mask: var(--stamp);
 }
 
 .monogram span {
   font-size: 1.55rem;
   font-weight: 700;
-  color: var(--surface);
+  color: var(--violet);
 }
 
 /* ================= MAGAZINE COVER HERO ================= */
@@ -277,22 +291,11 @@ a:hover {
   max-width: 1340px;
   margin: 1.6rem auto 0;
   padding: 3.5rem 2.8rem;
-  border-radius: 32px;
-  background:
-    radial-gradient(720px 460px at 84% 50%, color-mix(in srgb, var(--kesar) 16%, transparent), transparent 70%),
-    radial-gradient(520px 380px at 6% 0%, color-mix(in srgb, var(--haldi) 18%, transparent), transparent 70%),
-    var(--surface);
+  border-radius: 4px;
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 5px;
-  background: var(--spice-stripe);
 }
 
 .hero__grid {
@@ -316,10 +319,15 @@ a:hover {
   color: var(--ink);
 }
 
+/* Highlighter swipe on "Table" */
 .hero__title em {
-  color: var(--kesar);
+  color: var(--blue);
   font-style: italic;
   font-weight: 600;
+  background: var(--swipe);
+  padding: 0 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .lead {
@@ -339,23 +347,18 @@ a:hover {
   position: relative;
   display: flex;
   align-items: center;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  border-radius: 99px;
-  padding: 0.35rem 0.65rem 0.35rem 1.25rem;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  border-bottom: 2px solid var(--blue);
+  padding: 0.35rem 0.65rem 0.35rem 0.2rem;
+  transition: border-color 0.25s var(--ease-out);
 }
 
 .searchBox:focus-within {
-  border-color: var(--kesar);
-  box-shadow: var(--shadow-card), 0 0 0 4px var(--kesar-tint);
-  transform: translateY(-1px);
+  border-color: var(--red);
 }
 
 .searchIcon {
   font-size: 1.25rem;
-  color: var(--kesar-ink);
+  color: var(--blue);
   margin-right: 0.7rem;
   user-select: none;
 }
@@ -407,9 +410,8 @@ a:hover {
   align-items: baseline;
   gap: 0.5rem;
   padding: 0.55rem 1.1rem;
-  border-radius: 99px;
-  background: var(--c-tint);
-  border: 1px solid var(--border);
+  border-radius: 2px;
+  border: 1px solid var(--border-strong);
   font-size: 0.85rem;
   color: var(--ink-2);
 }
@@ -453,20 +455,6 @@ a:hover {
   perspective: 1100px;
 }
 
-.bookGlow {
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--kesar) 30%, transparent),
-    color-mix(in srgb, var(--gulabi) 12%, transparent) 55%,
-    transparent 72%
-  );
-  filter: blur(28px);
-  pointer-events: none;
-}
-
 .bookShadow {
   position: absolute;
   left: 50%;
@@ -475,7 +463,7 @@ a:hover {
   height: 28px;
   margin-left: -100px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(31, 26, 23, 0.3), transparent 70%);
+  background: radial-gradient(ellipse, rgba(26, 31, 51, 0.3), transparent 70%);
   filter: blur(4px);
   animation: bookShadow 6s ease-in-out infinite alternate;
 }
@@ -517,32 +505,24 @@ a:hover {
   justify-content: center;
   gap: 0.7rem;
   padding: 1.6rem 1.2rem;
-  border-radius: 3px 12px 12px 3px;
+  border-radius: 2px 5px 5px 2px;
+  /* Red bahi-khata cloth: a fine weave over the dye */
   background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.3), transparent 45%),
-    linear-gradient(160deg, var(--kesar), var(--mirchi) 78%);
-  box-shadow: inset 7px 0 12px rgba(31, 26, 23, 0.22);
-  color: var(--surface);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px),
+    var(--bahi);
+  box-shadow: inset 7px 0 12px rgba(0, 0, 0, 0.35);
+  color: var(--cord);
   text-align: center;
   overflow: hidden;
 }
 
-/* Spice stripe across the top of the cover */
-.book__front::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 6px;
-  background: var(--spice-stripe);
-}
-
-/* Thin inner frame, like a foil-stamped border */
+/* Thin inner frame, like a gold-tooled border */
 .book__front::after {
   content: "";
   position: absolute;
   inset: 16px 12px 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--cord) 70%, transparent);
   pointer-events: none;
 }
 
@@ -563,25 +543,20 @@ a:hover {
 
 .book__title em {
   display: block;
-  color: var(--haldi-tint);
+  color: var(--cord);
   font-style: italic;
   font-weight: 600;
 }
 
-/* A little thali: a plate with five katoris */
+/* The gold cord that ties the ledger shut, knotted in the middle */
 .book__thali {
   flex-shrink: 0;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.75);
+  width: calc(100% + 2.4rem);
+  height: 22px;
+  margin: 0 -1.2rem;
   background:
-    radial-gradient(circle at 50% 24%, var(--haldi) 0 5px, transparent 6px),
-    radial-gradient(circle at 77% 44%, var(--kadi-tint) 0 5px, transparent 6px),
-    radial-gradient(circle at 67% 74%, var(--gulabi-tint) 0 5px, transparent 6px),
-    radial-gradient(circle at 33% 74%, var(--surface) 0 5px, transparent 6px),
-    radial-gradient(circle at 23% 44%, var(--neel-tint) 0 5px, transparent 6px),
-    rgba(255, 255, 255, 0.16);
+    radial-gradient(circle at 50% 50%, var(--cord) 0 5px, color-mix(in srgb, var(--cord) 60%, black) 5.5px 6.5px, transparent 7px),
+    linear-gradient(to bottom, transparent 9px, var(--cord) 9px 12px, rgba(0, 0, 0, 0.35) 12px 13px, transparent 13px);
 }
 
 .book__sub {
@@ -593,8 +568,8 @@ a:hover {
 .book__back {
   inset: 0;
   transform: rotateY(180deg) translateZ(calc(var(--bt) / 2));
-  border-radius: 12px 3px 3px 12px;
-  background: color-mix(in srgb, var(--mirchi) 82%, var(--ink));
+  border-radius: 5px 2px 2px 5px;
+  background: color-mix(in srgb, var(--bahi) 85%, black);
 }
 
 .book__spine {
@@ -606,13 +581,8 @@ a:hover {
   display: grid;
   place-items: center;
   border-radius: 3px;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--neel) 70%, var(--ink)),
-    var(--neel) 45%,
-    color-mix(in srgb, var(--neel) 80%, var(--ink))
-  );
-  box-shadow: inset 0 14px 0 -10px var(--haldi), inset 0 -14px 0 -10px var(--haldi);
+  background: color-mix(in srgb, var(--bahi) 80%, black);
+  box-shadow: inset 0 14px 0 -10px var(--cord), inset 0 -14px 0 -10px var(--cord);
 }
 
 .book__spine span {
@@ -622,7 +592,7 @@ a:hover {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.16em;
-  color: var(--haldi);
+  color: var(--cord);
 }
 
 .book__pages {
@@ -674,40 +644,46 @@ a:hover {
   animation-delay: calc(var(--i) * -6.5s);
 }
 
+/* Each word is a rubber stamp, inked a little crooked */
 .orbitWord__pill {
   display: block;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(var(--tilt, 0deg));
   white-space: nowrap;
   padding: 0.38rem 0.95rem;
-  border-radius: 99px;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.02rem;
-  font-style: italic;
-  font-weight: 600;
-  background: var(--c-tint);
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--surface);
   color: var(--c-ink);
-  border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
-  box-shadow: var(--shadow-card);
+  border: 2px solid var(--c-ink);
+  -webkit-mask: var(--stamp);
+  mask: var(--stamp);
   animation: orbitFade 26s linear infinite;
   animation-delay: calc(var(--i) * -6.5s);
 }
 
 .orbitWord--1 {
+  --tilt: -4deg;
   --c: var(--kadi);
   --c-ink: var(--kadi-ink);
   --c-tint: var(--kadi-tint);
 }
 .orbitWord--2 {
+  --tilt: 3deg;
   --c: var(--kesar);
   --c-ink: var(--kesar-ink);
   --c-tint: var(--kesar-tint);
 }
 .orbitWord--3 {
+  --tilt: -2deg;
   --c: var(--neel);
   --c-ink: var(--neel-ink);
   --c-tint: var(--neel-tint);
 }
 .orbitWord--4 {
+  --tilt: 5deg;
   --c: var(--gulabi);
   --c-ink: var(--gulabi-ink);
   --c-tint: var(--gulabi-tint);
@@ -818,17 +794,11 @@ a:hover {
 
 /* ================= EDITORIAL TABLE OF CONTENTS BY REGION ================= */
 .tocSection {
-  --accent: var(--neel);
-  --accent-ink: var(--neel-ink);
-  --accent-tint: var(--neel-tint);
-  --on-accent: var(--surface);
   max-width: 1340px;
   margin: 2.2rem auto 0;
   padding: 2rem 2.4rem;
-  border-radius: 28px;
-  background:
-    radial-gradient(680px 300px at 88% 0%, color-mix(in srgb, var(--neel) 9%, transparent), transparent 70%),
-    var(--surface);
+  border-radius: 4px;
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
@@ -862,15 +832,14 @@ a:hover {
   gap: 0.65rem;
   width: 100%;
   padding: 0.65rem 0.95rem;
-  border-radius: 14px;
-  background: var(--paper);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
   color: var(--ink-2);
   font: inherit;
   text-align: left;
   cursor: pointer;
   transition:
-    transform 0.2s var(--ease-out),
     background 0.2s var(--ease-out),
     border-color 0.2s var(--ease-out),
     color 0.2s var(--ease-out);
@@ -894,7 +863,6 @@ a:hover {
 }
 
 .tocItem:hover {
-  transform: translateY(-2px);
   background: var(--neel-tint);
   border-color: var(--neel);
   color: var(--ink);
@@ -902,21 +870,16 @@ a:hover {
 
 .tocItem--all {
   grid-column: 1 / -1;
-  background: var(--neel-tint);
-  border-color: var(--border-strong);
+  border-bottom: 2px solid var(--ink);
   padding: 0.8rem 1.15rem;
 }
 
-.tocItem--active {
-  background: var(--neel);
-  border-color: var(--neel);
-  color: var(--surface);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--neel) 28%, transparent);
-}
-
+/* The chosen chapter is run over with a highlighter */
+.tocItem--active,
 .tocItem--active:hover {
-  background: var(--neel);
-  color: var(--surface);
+  background: var(--hl);
+  border-color: var(--hl-ink);
+  color: var(--ink);
 }
 
 .tocItem__num {
@@ -952,31 +915,29 @@ a:hover {
   background: var(--surface);
   border: 1px solid var(--border);
   padding: 0.16rem 0.6rem;
-  border-radius: 99px;
+  border-radius: 2px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .tocItem--active .tocItem__num,
 .tocItem--active .tocItem__name {
-  color: var(--surface);
+  color: var(--ink);
 }
 
 .tocItem--active .tocItem__dots {
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: var(--hl-ink);
 }
 
 .tocItem--active .tocItem__count {
-  background: var(--haldi);
-  color: var(--ink);
-  border-color: var(--haldi);
+  border-color: var(--ink);
 }
 
 /* ================= MAIN ARCHIVE LAYOUT & SIDEBAR ================= */
 .layout {
-  --accent: var(--mirchi);
-  --accent-ink: var(--mirchi-ink);
-  --accent-tint: var(--mirchi-tint);
+  --accent: var(--neel);
+  --accent-ink: var(--neel-ink);
+  --accent-tint: var(--neel-tint);
   --on-accent: var(--surface);
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -992,9 +953,9 @@ a:hover {
   top: 4.8rem;
   max-height: calc(100vh - 6rem);
   overflow-y: auto;
-  background: var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 4px;
   padding: 1.4rem;
   box-shadow: var(--shadow-card);
 }
@@ -1069,7 +1030,7 @@ a:hover {
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.05rem 0.45rem;
-  border-radius: 99px;
+  border-radius: 2px;
 }
 
 .optList {
@@ -1083,7 +1044,7 @@ a:hover {
   align-items: center;
   gap: 0.55rem;
   padding: 0.28rem 0.45rem;
-  border-radius: 8px;
+  border-radius: 3px;
   font-size: 0.85rem;
   color: var(--ink-2);
   cursor: pointer;
@@ -1113,7 +1074,7 @@ a:hover {
   background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--border-strong);
-  border-radius: 99px;
+  border-radius: 2px;
   padding: 0.55rem 1.15rem;
   cursor: pointer;
   font: inherit;
@@ -1153,9 +1114,9 @@ a:hover {
   justify-content: space-between;
   margin-bottom: 1.2rem;
   padding: 0.9rem 1.35rem;
-  background: var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 4px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -1181,7 +1142,7 @@ a:hover {
   display: inline-flex;
   background: var(--paper);
   border: 1px solid var(--border);
-  border-radius: 99px;
+  border-radius: 2px;
   padding: 0.2rem;
 }
 
@@ -1190,7 +1151,7 @@ a:hover {
   border: 0;
   color: var(--muted);
   padding: 0.35rem 0.9rem;
-  border-radius: 99px;
+  border-radius: 2px;
   font: inherit;
   font-size: 0.8rem;
   cursor: pointer;
@@ -1218,7 +1179,7 @@ a:hover {
   background: var(--accent-tint);
   color: var(--accent-ink);
   border: 1px solid var(--accent);
-  border-radius: 99px;
+  border-radius: 2px;
   padding: 0.32rem 0.85rem;
   cursor: pointer;
   font: inherit;
@@ -1293,13 +1254,12 @@ a:hover {
 }
 
 .vegMark--nonveg {
-  --mark: var(--mirchi-ink);
+  --mark: var(--red);
 }
 
 .card__badges .vegMark {
   width: 24px;
   height: 24px;
-  border-radius: 6px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -1325,9 +1285,9 @@ a:hover {
 
 .card {
   position: relative;
-  background: var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-card);
@@ -1342,28 +1302,7 @@ a:hover {
 }
 
 .card:hover {
-  border-color: var(--c);
-  box-shadow:
-    0 2px 6px rgba(31, 26, 23, 0.06),
-    0 22px 44px color-mix(in srgb, var(--c) 22%, transparent);
-}
-
-.card__glare {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0;
-  background: radial-gradient(
-    360px circle at var(--gx, 50%) var(--gy, 50%),
-    color-mix(in srgb, var(--c) 10%, transparent),
-    transparent 65%
-  );
-  transition: opacity 0.3s var(--ease-out);
-}
-
-.card:hover .card__glare {
-  opacity: 1;
+  border-color: var(--blue);
 }
 
 .card__media {
@@ -1385,8 +1324,7 @@ a:hover {
   aspect-ratio: 3 / 2;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s var(--ease-out), filter 0.4s var(--ease-out);
-  filter: saturate(1.06);
+  transition: transform 0.6s var(--ease-out);
 }
 
 .card:hover img {
@@ -1404,26 +1342,36 @@ a:hover {
   z-index: 3;
 }
 
+/* Badges are rubber stamps on the photo */
 .badge {
   padding: 0.22rem 0.68rem;
-  border-radius: 99px;
+  border-radius: 2px;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  box-shadow: var(--shadow-sm);
+  background: var(--surface);
+  border: 2px solid currentColor;
+  -webkit-mask: var(--stamp);
+  mask: var(--stamp);
 }
 
 .badge--region {
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--border);
+  color: var(--blue);
+  transform: rotate(-1.5deg);
 }
 
 .badge--course {
-  background: var(--c-tint);
   color: var(--c-ink);
-  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+  transform: rotate(2deg);
+}
+
+/* Highlighter yellow is a fill, so its stamp gets ink text */
+[data-course="Breakfast"] .badge--course,
+[data-course="Bread"] .badge--course,
+[data-course="Bread / Flatbread"] .badge--course {
+  background: var(--hl);
+  color: var(--ink);
 }
 
 .card__num {
@@ -1431,7 +1379,7 @@ a:hover {
   bottom: 0.65rem;
   right: 0.75rem;
   padding: 0.15rem 0.55rem;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface);
   border: 1px solid var(--border);
   font-family: var(--font-serif), Georgia, serif;
@@ -1440,14 +1388,12 @@ a:hover {
   z-index: 3;
 }
 
-/* Colourful monogram tile when a photo is missing or fails */
+/* Plain paper tile with handwritten initials when a photo is missing or fails */
 .ph {
   width: 100%;
   height: 100%;
   aspect-ratio: 3 / 2;
-  background:
-    radial-gradient(circle at 30% 25%, var(--surface), transparent 60%),
-    linear-gradient(135deg, var(--c-tint) 0%, color-mix(in srgb, var(--c) 28%, var(--surface)) 100%);
+  background: var(--khadi), var(--paper-2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1457,8 +1403,6 @@ a:hover {
 }
 
 .ph__inner {
-  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
-  border-radius: 16px;
   padding: 1rem 1.2rem;
   width: 100%;
   height: 100%;
@@ -1466,13 +1410,13 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--surface) 45%, transparent);
 }
 
 .ph__monogram {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--c-ink);
+  font-style: italic;
+  color: var(--blue);
   line-height: 1.1;
   margin-bottom: 0.25rem;
 }
@@ -1577,7 +1521,7 @@ a:hover {
   background: var(--paper);
   border: 1px solid var(--border);
   color: var(--ink-2);
-  border-radius: 99px;
+  border-radius: 2px;
   padding: 0.2rem 0.75rem;
   font-size: 0.76rem;
 }
@@ -1586,9 +1530,9 @@ a:hover {
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;
-  background: var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 4px;
 }
 
 .sentinel {
@@ -1607,9 +1551,9 @@ a:hover {
 }
 
 .about__card {
-  background: var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 28px;
+  border-radius: 4px;
   padding: 3rem 2.5rem;
   text-align: center;
   max-width: 880px;
@@ -1636,9 +1580,7 @@ a:hover {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(31, 26, 23, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(26, 31, 51, 0.5);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -1648,28 +1590,15 @@ a:hover {
 }
 
 .modal {
-  --accent: var(--haldi);
-  --accent-ink: var(--haldi-ink);
-  --accent-tint: var(--haldi-tint);
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(900px 420px at 12% 0%, color-mix(in srgb, var(--haldi) 14%, transparent), transparent 65%),
-    var(--surface);
+  background: var(--khadi), var(--surface);
   border: 1px solid var(--border);
-  border-radius: 30px;
+  border-radius: 4px;
   max-width: 1060px;
   width: 100%;
   padding: 2.2rem 2.6rem 2.6rem;
-  box-shadow: 0 30px 80px rgba(31, 26, 23, 0.3);
-}
-
-.modal::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 5px;
-  background: var(--spice-stripe);
+  box-shadow: 0 30px 60px rgba(26, 31, 51, 0.25);
 }
 
 .modal__topbar {
@@ -1727,9 +1656,8 @@ a:hover {
 .modal__story {
   margin: 0;
   padding: 1.25rem 1.5rem;
-  border-left: 4px solid var(--haldi);
-  background: var(--haldi-tint);
-  border-radius: 0 18px 18px 0;
+  border-left: 3px solid var(--red);
+  background: var(--khadi), var(--paper-2);
   color: var(--ink-2);
   font-size: 0.98rem;
   line-height: 1.75;
@@ -1745,7 +1673,7 @@ a:hover {
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 22px;
+  border-radius: 3px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
@@ -1764,9 +1692,8 @@ a:hover {
   gap: 0.85rem;
   margin: 0 0 2.2rem;
   padding: 1.25rem;
-  background: var(--paper);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 3px;
 }
 
 .dl__item {
@@ -1822,7 +1749,7 @@ a:hover {
   align-items: center;
   gap: 0.75rem;
   padding: 0.65rem 0.9rem;
-  border-radius: 14px;
+  border-radius: 3px;
   background: var(--surface);
   border: 1px solid var(--border);
   cursor: pointer;
@@ -1844,7 +1771,7 @@ a:hover {
 .ingCheck {
   width: 20px;
   height: 20px;
-  border-radius: 6px;
+  border-radius: 3px;
   border: 1.5px solid var(--kadi);
   display: grid;
   place-items: center;
@@ -1875,8 +1802,7 @@ a:hover {
   gap: 0.9rem;
   align-items: start;
   padding: 1rem 1.2rem;
-  border-radius: 18px;
-  background: var(--paper);
+  border-radius: 3px;
   border: 1px solid var(--border);
 }
 
@@ -1902,13 +1828,13 @@ a:hover {
   --c-tint: var(--haldi-tint);
 }
 
+/* Step numbers are circled in ballpoint */
 .stepNum {
   width: 36px;
   height: 36px;
-  border-radius: 12px;
-  background: var(--c-tint);
-  border: 1px solid color-mix(in srgb, var(--c-ink) 25%, transparent);
-  color: var(--c-ink);
+  border-radius: 50%;
+  border: 1.5px solid var(--blue);
+  color: var(--blue);
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 700;
   font-size: 0.92rem;
@@ -1984,8 +1910,8 @@ a:hover {
     top: auto;
     max-height: 82vh;
     z-index: 90;
-    border-radius: 28px 28px 0 0;
-    box-shadow: 0 -20px 50px rgba(31, 26, 23, 0.25);
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 -20px 50px rgba(26, 31, 51, 0.25);
   }
 
   .filters.show {
@@ -2007,7 +1933,7 @@ a:hover {
     position: fixed;
     inset: 0;
     z-index: 89;
-    background: rgba(31, 26, 23, 0.45);
+    background: rgba(26, 31, 51, 0.45);
   }
 
   .topbar__chapter {
@@ -2092,8 +2018,8 @@ a:hover {
   }
 
   .book__thali {
-    width: 36px;
-    height: 36px;
+    width: calc(100% + 1.6rem);
+    margin: 0 -0.8rem;
   }
 
   .orbitWord__pill {

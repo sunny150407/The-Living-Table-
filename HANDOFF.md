@@ -28,27 +28,13 @@ npm run build   # rebuild without the base path afterwards for local/Netlify use
 
 ## Next up, in order
 
-### 1. Palette rethink (PAUSED mid-task, start here)
-Om's verdict on Masala Market: it **looks AI-made**. Specifically:
-- The orange-to-red gradient "T" app-icon tile has to go.
-- The soft radial colour glows have to go.
-- Saffron as the lead colour is weak; pick a better one.
-- It's more about how loudly the colours are used than the hues themselves.
-- **Keep the light paper background.** Direction: **printed**. The book cover can stay coloured or become cloth-bound, either is fine.
-- He wants **options, creative, no generic slop.** He rejected the stock fix ("one colour per section, no gradients, sharper corners") as the whole answer.
-
-Plan: mock three print concepts as injected CSS overrides (no repo changes), send Om comparison sheets (hero with book, archive grid, popup, mobile hero), then build the one he picks properly as tokens in `globals.css`. Every theme drops the spice stripe, the glows, the gradient monogram and the pastel pills, and tightens radii to 2–6px.
-
-1. **Ajrakh block print** (Kutch textile printing). Undyed cotton paper `#F3ECDF`, surface `#FAF6EE`, iron-black ink `#1B1714`. Lead **indigo `#1F2D5C`**, second **madder red `#A3302A`** (text ink `#8F2A24`), small amounts of ochre `#B8862B` (text `#6F4F10`) and green `#3E5B3A`. A block-print band of indigo diamonds with madder dots replaces the stripe. The book is indigo linen with a block-print band and a madder rosette. Badges are flat solid labels. Orbit words are cream tags with a double rule.
-2. **Riso zine, two inks.** Paper `#F6F1E4`. **Peacock teal `#00838A`** (text `#006B71`) plus **rani pink `#E5197F`** (text and badge fill `#B5126A`), with plum `#5B2A5E` where they overprint. The hero title is slightly misregistered (pink offset shadow), placeholder tiles use halftone dots, and card hover gets a hard offset shadow. The book is a cream cover with a pink halftone sun and a teal title. Orbit words are slightly rotated stickers.
-3. **Ledger / register.** Paper `#F7F4EC`, faint blue ruled lines `#C9D5EA` and a red margin rule. Lead **Reynolds ballpoint blue `#2340A0`**, **office-stamp violet `#5B3C99`**, correction red `#C0362C`, green-pen `#1F7A4D`, and highlighter `#FFE45C` (dark text `#6E5C00`). Badges and orbit words are rubber stamps; the monogram is a round violet seal; "Table" gets a highlighter swipe; the popup story sits on ruled lines. The book is a red cloth bahi-khata ledger with a gold cord.
-
-The existing tokens (`--haldi/--kesar/--mirchi/--gulabi/--neel/--kadi` plus `-ink`/`-tint`) can be remapped per theme, so the course colours and sections follow automatically. Check WCAG AA contrast for every text pair before shipping, then update the CLAUDE.md design section.
+### 1. Palette rethink (DONE, Sat 17 Oct)
+Om rejected Masala Market as AI-made, so three print concepts were mocked: Ajrakh block print, a two-ink Riso zine, and a Ledger/bahi-khata register. He picked **Ledger, without ruled lines, on handmade paper**. It's now built as tokens in `globals.css` (see the CLAUDE.md design section). The mocks, comparison sheets and screenshot rig are in the project files under `palette-mocks/`.
 
 ### 2. Small 3D touches built around the book (Sat)
 The popup opens like a page turn (it has no enter/exit animation today). Cards lift ≤3°. Drop the list-view tilt, which warps 970px cards. Gate everything behind `(hover: hover)` and `prefers-reduced-motion`. Use the apple-design skill.
 
-### 3. Photo pipeline (Sat)
+### 3. Photo pipeline (DROPPED by Om, 17 Oct: leave it alone)
 - **Hydration bug:** if a photo fails before React hydrates, `onError` never fires and the card stays a broken icon forever. Fix in `Photo` (`app/page.tsx`): on mount, if `img.complete && img.naturalWidth === 0`, run the error path.
 - **Wrong photos:** Theeyal (a vegan dish) shows an AI "pork rice" image; Taftan (vegetarian bread) shows Shahi Murg's chicken; the Manipuri trio Chamthong/Paknam/Singju share one photo. 14 URLs are shared across 29 recipes. 24 Adobe Stock (`ftcdn`) and Freepik images may be watermarked; eyeball them.
 - **Liveness:** the cloud sandbox can't reach the image hosts. Run the check on a laptop or allow the hosts in the environment's network settings.
