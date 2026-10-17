@@ -31,16 +31,24 @@ npm run build   # rebuild without the base path afterwards for local/Netlify use
 ### 1. Palette rethink (DONE, Sat 17 Oct)
 Om rejected Masala Market as AI-made, so three print concepts were mocked: Ajrakh block print, a two-ink Riso zine, and a Ledger/bahi-khata register. He picked **Ledger, without ruled lines, on handmade paper**. It's now built as tokens in `globals.css` (see the CLAUDE.md design section). The mocks, comparison sheets and screenshot rig are in the project files under `palette-mocks/`.
 
-### 2. Small 3D touches built around the book (Sat)
-The popup opens like a page turn (it has no enter/exit animation today). Cards lift ≤3°. Drop the list-view tilt, which warps 970px cards. Gate everything behind `(hover: hover)` and `prefers-reduced-motion`. Use the apple-design skill.
+### 2. Motion: "smooth as water and oil" (DONE, Sat 17 Oct)
+- The popup opens like a page turning on its spine and closes back the same way.
+- Previous and next slide in from the side you asked for. The arrow keys turn pages and Escape closes.
+- Cards lean at most about 2.5° toward the pointer (mouse only), lift 3px on hover, press on click and settle in a beat apart. The list view no longer tilts.
+- The mobile filter sheet slides up and down, filter accordions open to their natural height, and the scroll bar no longer re-renders the page.
+- Everything has a `prefers-reduced-motion` fallback.
+- A view-transition morph between grid and list was tried and dropped because it distorted the snapshots. Changing the view re-staggers the cards instead.
 
 ### 3. Photo pipeline (DROPPED by Om, 17 Oct: leave it alone)
 - **Hydration bug:** if a photo fails before React hydrates, `onError` never fires and the card stays a broken icon forever. Fix in `Photo` (`app/page.tsx`): on mount, if `img.complete && img.naturalWidth === 0`, run the error path.
 - **Wrong photos:** Theeyal (a vegan dish) shows an AI "pork rice" image; Taftan (vegetarian bread) shows Shahi Murg's chicken; the Manipuri trio Chamthong/Paknam/Singju share one photo. 14 URLs are shared across 29 recipes. 24 Adobe Stock (`ftcdn`) and Freepik images may be watermarked; eyeball them.
 - **Liveness:** the cloud sandbox can't reach the image hosts. Run the check on a laptop or allow the hosts in the environment's network settings.
 
-### 4. Keyboard focus and mobile popup (Sat, lower priority)
-Trap Tab inside the popup, return focus to the card on close, make ingredients keyboard-usable, and keep the popup topbar sticky on mobile.
+### 4. Keyboard focus and mobile popup (DONE, Sat 17 Oct)
+- Tab is trapped inside the popup, and closing it returns focus to the card.
+- Ingredients are keyboard checkboxes.
+- The popup's top bar (Back, previous and next) sticks at every size.
+- Editorial List photos now fill the whole left column.
 
 ### 5. Sunday
 Code freeze. Click through on the demo laptop, the projector and a phone with cache disabled. Final redeploy. Rollback point: `dc27cf7`.

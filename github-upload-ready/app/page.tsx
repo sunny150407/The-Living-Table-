@@ -99,6 +99,11 @@ function Photo({ r, w, h, credit }: { r: Recipe; w: number; h: number; credit?: 
   );
 }
 
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Elements Tab can land on inside the popup
+const FOCUSABLE = 'button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])';
+
 const vals = (r: Recipe, k: keyof Recipe) => ([] as string[]).concat(r[k] as string | string[]);
 
 // Indian food-label mark: green for vegetarian/vegan, red for everything else (meat, fish, egg)
@@ -145,8 +150,10 @@ export default function Home() {
   const [open, setOpen] = useState<Recipe | null>(null);
   const [panel, setPanel] = useState(false);
   const [view, setView] = useState<"grid" | "list">("grid");
-  const [scrollPct, setScrollPct] = useState(0);
   const [checkedIng, setCheckedIng] = useState<Record<string, boolean>>({});
+  // Popup motion: how the current page arrived, and whether the popup is on its way out
+  const [turn, setTurn] = useState<"in" | "next" | "prev">("in");
+  const [closing, setClosing] = useState(false);
 
   // Region counts for the Table of Contents
   const regionStats = useMemo(() => {
@@ -157,18 +164,35 @@ export default function Home() {
     return Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   }, [all]);
 
-  // Scroll progress bar & Escape key handler for modal
+  // Scroll progress bar: written straight to the DOM once per frame, so scrolling never re-renders the page
+  const progressRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const onScroll = () => {
+    let raf = 0;
+    const paint = () => {
+      raf = 0;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollPct(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
+      const pct = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${pct})`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(paint);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    paint();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const overlayRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<number | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const keysRef = useRef<{ close: () => void; prev: () => void; next: () => void }>({
+    close: () => {},
+    prev: () => {},
+    next: () => {},
+  });
 
   useEffect(() => {
     setCheckedIng({});
@@ -180,8 +204,11 @@ export default function Home() {
     if (overlayRef.current) {
       overlayRef.current.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     }
+    // Escape closes; the arrow keys turn to the previous or next plate
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(null);
+      if (e.key === "Escape") keysRef.current.close();
+      else if (e.key === "ArrowLeft") keysRef.current.prev();
+      else if (e.key === "ArrowRight") keysRef.current.next();
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -253,14 +280,66 @@ export default function Home() {
     });
   };
 
-  // 3D Card Tilt handlers
+  const openIdx = open ? results.findIndex((r) => r.id === open.id) : -1;
+  const prevRecipe = openIdx > 0 ? results[openIdx - 1] : null;
+  const nextRecipe = openIdx >= 0 && openIdx < results.length - 1 ? results[openIdx + 1] : null;
+
+  const openRecipe = (r: Recipe) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+    openerRef.current = r.id;
+    setTurn("in");
+    setClosing(false);
+    setOpen(r);
+  };
+
+  const turnTo = (r: Recipe | null, dir: "next" | "prev") => {
+    if (!r || closing) return;
+    setTurn(dir);
+    setOpen(r);
+  };
+
+  // Unmount once the closing animation ends, and hand focus back to the card that was open
+  const finishClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+    const id = open?.id ?? openerRef.current;
+    setOpen(null);
+    setClosing(false);
+    requestAnimationFrame(() => {
+      const card =
+        document.querySelector<HTMLElement>(`[data-card-id="${id}"]`) ||
+        document.querySelector<HTMLElement>(`[data-card-id="${openerRef.current}"]`);
+      card?.querySelector<HTMLElement>(".link")?.focus({ preventScroll: true });
+      const box = card?.getBoundingClientRect();
+      if (card && box && (box.bottom < 0 || box.top > window.innerHeight)) {
+        card.scrollIntoView({ block: "center", behavior: reducedMotion() ? "auto" : "smooth" });
+      }
+    });
+  };
+
+  const close = () => {
+    if (!open || closeTimer.current) return;
+    setClosing(true);
+    // Safety net in case animationend never fires
+    closeTimer.current = setTimeout(finishClose, 600);
+  };
+
+  keysRef.current = {
+    close,
+    prev: () => turnTo(prevRecipe, "prev"),
+    next: () => turnTo(nextRecipe, "next"),
+  };
+
+  // Card tilt: a gentle lean toward the pointer, grid view and mouse only
   const handleCardMove = (e: React.MouseEvent<HTMLLIElement>) => {
+    if (view === "list" || !window.matchMedia("(hover: hover)").matches || reducedMotion()) return;
     const el = e.currentTarget;
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
-    const rx = (0.5 - py) * 9;
-    const ry = (px - 0.5) * 11;
+    const rx = (0.5 - py) * 4;
+    const ry = (px - 0.5) * 5;
     el.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
     el.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
   };
@@ -273,10 +352,6 @@ export default function Home() {
 
   const chips = Object.entries(sel).flatMap(([k, v]) => v.map((x) => [k, x] as const));
   const activeRegions = sel.region || [];
-
-  const openIdx = open ? results.findIndex((r) => r.id === open.id) : -1;
-  const prevRecipe = openIdx > 0 ? results[openIdx - 1] : null;
-  const nextRecipe = openIdx >= 0 && openIdx < results.length - 1 ? results[openIdx + 1] : null;
 
   const filters = (
     <div className="filterGroups">
@@ -321,11 +396,7 @@ export default function Home() {
             <a href="#archive">Archive</a>
           </nav>
         </div>
-        <div
-          className="topbar__progress"
-          style={{ transform: `scaleX(${scrollPct})` }}
-          aria-hidden="true"
-        />
+        <div ref={progressRef} className="topbar__progress" aria-hidden="true" />
       </header>
 
       <main>
@@ -457,7 +528,7 @@ export default function Home() {
 
         {/* MAIN ARCHIVE LAYOUT */}
         <section id="archive" className="layout" aria-label="Archive">
-          {panel && <div className="sheetScrim" aria-hidden="true" onClick={() => setPanel(false)} />}
+          <div className={`sheetScrim ${panel ? "show" : ""}`} aria-hidden="true" onClick={() => setPanel(false)} />
           <aside className={`filters ${panel ? "show" : ""}`} aria-label="Filters">
             <div className="filters__head">
               <div>
@@ -490,12 +561,14 @@ export default function Home() {
                 <div className="viewToggle" role="group" aria-label="Layout view">
                   <button
                     className={`viewBtn ${view === "grid" ? "viewBtn--active" : ""}`}
+                    aria-pressed={view === "grid"}
                     onClick={() => setView("grid")}
                   >
                     Grid
                   </button>
                   <button
                     className={`viewBtn ${view === "list" ? "viewBtn--active" : ""}`}
+                    aria-pressed={view === "list"}
                     onClick={() => setView("list")}
                   >
                     Editorial List
@@ -523,15 +596,18 @@ export default function Home() {
               </div>
             )}
 
-            <ul className={`cards ${view}`}>
+            {/* Keyed by view so the plates settle in again when the layout changes */}
+            <ul key={view} className={`cards ${view}`}>
               {results.slice(0, limit).map((r, idx) => (
                 <li
                   key={r.id}
                   className="card"
                   data-course={r.course}
+                  data-card-id={r.id}
+                  style={{ "--i": idx % 24 } as React.CSSProperties}
                   onMouseMove={handleCardMove}
                   onMouseLeave={handleCardLeave}
-                  onClick={() => setOpen(r)}
+                  onClick={() => openRecipe(r)}
                 >
                   <div className="card__media">
                     <Photo r={r} w={480} h={320} />
@@ -551,7 +627,7 @@ export default function Home() {
                         className="link"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setOpen(r);
+                          openRecipe(r);
                         }}
                       >
                         {r.title}
@@ -599,122 +675,155 @@ export default function Home() {
       {open && (
         <div
           ref={overlayRef}
-          className="overlay"
+          className={`overlay ${closing ? "overlay--closing" : ""}`}
           role="dialog"
           aria-modal="true"
           aria-labelledby="mt"
-          onClick={() => setOpen(null)}
+          onClick={close}
+          onAnimationEnd={(e) => {
+            if (closing && e.target === e.currentTarget) finishClose();
+          }}
+          onKeyDown={(e) => {
+            // Keep Tab inside the popup
+            if (e.key !== "Tab") return;
+            const items = Array.from(e.currentTarget.querySelectorAll<HTMLElement>(FOCUSABLE));
+            if (!items.length) return;
+            const first = items[0];
+            const last = items[items.length - 1];
+            const active = document.activeElement;
+            if (!e.currentTarget.contains(active)) {
+              e.preventDefault();
+              first.focus();
+            } else if (e.shiftKey && active === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && active === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }}
         >
           <article className="modal" data-course={open.course} onClick={(e) => e.stopPropagation()}>
             <div className="modal__topbar">
-              <button className="btn btn--ghost" autoFocus onClick={() => setOpen(null)}>
+              <button className="btn btn--ghost" autoFocus onClick={close}>
                 ← Back to Archive
               </button>
               <div className="modal__nav">
                 {prevRecipe && (
-                  <button className="btn btn--small" onClick={() => setOpen(prevRecipe)}>
+                  <button className="btn btn--small" onClick={() => turnTo(prevRecipe, "prev")}>
                     ← {prevRecipe.title}
                   </button>
                 )}
                 {nextRecipe && (
-                  <button className="btn btn--small" onClick={() => setOpen(nextRecipe)}>
+                  <button className="btn btn--small" onClick={() => turnTo(nextRecipe, "next")}>
                     {nextRecipe.title} →
                   </button>
                 )}
               </div>
             </div>
 
-            <div className="modal__hero">
-              <div className="modal__titleCol">
-                <p className="kicker modal__kicker">
-                  <VegMark r={open} />
-                  <span>
-                    {open.region} Tradition · {open.course} · {open.era}
-                  </span>
-                </p>
-                <h2 id="mt" className="modal__title">
-                  {open.title}
-                </h2>
-                <p className="modal__byline">
-                  Preserved via <strong>{open.contributor}</strong> ({open.source}) · {open.context}
-                </p>
-                <blockquote className="modal__story">
-                  <p>{open.story}</p>
-                </blockquote>
-              </div>
-              <div className="modal__photoCol">
-                <Photo key={open.id} r={open} w={900} h={600} credit />
-              </div>
-            </div>
-
-            <dl className="dl">
-              {(
-                [
-                  ["Primary Ingredient", open.ingredient],
-                  ["Dietary Profile", open.dietary.join(", ")],
-                  ["Course", open.course],
-                  ["Technique", open.method],
-                  ["Total Time", open.time],
-                  ["Difficulty", open.difficulty],
-                  ["Yield", open.yield],
-                  ["Seasonality", open.season],
-                  ["Cultural Context", open.context],
-                ] as const
-              ).map(([a, b]) => (
-                <div key={a} className="dl__item">
-                  <dt>{a}</dt>
-                  <dd>{b}</dd>
+            <div key={open.id} className={`modal__page modal__page--${turn}`}>
+              <div className="modal__hero">
+                <div className="modal__titleCol">
+                  <p className="kicker modal__kicker">
+                    <VegMark r={open} />
+                    <span>
+                      {open.region} Tradition · {open.course} · {open.era}
+                    </span>
+                  </p>
+                  <h2 id="mt" className="modal__title">
+                    {open.title}
+                  </h2>
+                  <p className="modal__byline">
+                    Preserved via <strong>{open.contributor}</strong> ({open.source}) · {open.context}
+                  </p>
+                  <blockquote className="modal__story">
+                    <p>{open.story}</p>
+                  </blockquote>
                 </div>
-              ))}
-            </dl>
-
-            <div className="modal__columns">
-              <div className="modal__ingCol">
-                <p className="kicker">Mise en Place</p>
-                <h3>Ingredients</h3>
-                <p className="modal__hint">Click any ingredient to check it off as you cook.</p>
-                <ul className="ingList">
-                  {open.ingredients.map((i, idx) => {
-                    const key = `${idx}-${i}`;
-                    const done = !!checkedIng[key];
-                    return (
-                      <li
-                        key={key}
-                        className={done ? "ingList__item ingList__item--done" : "ingList__item"}
-                        onClick={() => setCheckedIng((c) => ({ ...c, [key]: !c[key] }))}
-                      >
-                        <span className="ingCheck" aria-hidden="true">
-                          {done ? "✓" : ""}
-                        </span>
-                        <span>{i}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <div className="modal__photoCol">
+                  <Photo key={open.id} r={open} w={900} h={600} credit />
+                </div>
               </div>
 
-              <div className="modal__stepCol">
-                <p className="kicker">Preparation &amp; Ritual</p>
-                <h3>Method</h3>
-                <ol className="stepList">
-                  {open.steps.map((s, idx) => (
-                    <li key={`${idx}-${s.slice(0, 20)}`} className="stepList__item">
-                      <span className="stepNum">{String(idx + 1).padStart(2, "0")}</span>
-                      <p>{s}</p>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-
-            <div className="modal__footer">
-              <p className="tags">
-                {open.tags.map((t, idx) => (
-                  <span key={`${idx}-${t}`} className="tag">
-                    {t}
-                  </span>
+              <dl className="dl">
+                {(
+                  [
+                    ["Primary Ingredient", open.ingredient],
+                    ["Dietary Profile", open.dietary.join(", ")],
+                    ["Course", open.course],
+                    ["Technique", open.method],
+                    ["Total Time", open.time],
+                    ["Difficulty", open.difficulty],
+                    ["Yield", open.yield],
+                    ["Seasonality", open.season],
+                    ["Cultural Context", open.context],
+                  ] as const
+                ).map(([a, b]) => (
+                  <div key={a} className="dl__item">
+                    <dt>{a}</dt>
+                    <dd>{b}</dd>
+                  </div>
                 ))}
-              </p>
+              </dl>
+
+              <div className="modal__columns">
+                <div className="modal__ingCol">
+                  <p className="kicker">Mise en Place</p>
+                  <h3>Ingredients</h3>
+                  <p className="modal__hint">Tap any ingredient to check it off as you cook.</p>
+                  <ul className="ingList">
+                    {open.ingredients.map((i, idx) => {
+                      const key = `${idx}-${i}`;
+                      const done = !!checkedIng[key];
+                      return (
+                        <li
+                          key={key}
+                          className={done ? "ingList__item ingList__item--done" : "ingList__item"}
+                          role="checkbox"
+                          aria-checked={done}
+                          tabIndex={0}
+                          onClick={() => setCheckedIng((c) => ({ ...c, [key]: !c[key] }))}
+                          onKeyDown={(e) => {
+                            if (e.key === " " || e.key === "Enter") {
+                              e.preventDefault();
+                              setCheckedIng((c) => ({ ...c, [key]: !c[key] }));
+                            }
+                          }}
+                        >
+                          <span className="ingCheck" aria-hidden="true">
+                            {done ? "✓" : ""}
+                          </span>
+                          <span>{i}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <div className="modal__stepCol">
+                  <p className="kicker">Preparation &amp; Ritual</p>
+                  <h3>Method</h3>
+                  <ol className="stepList">
+                    {open.steps.map((s, idx) => (
+                      <li key={`${idx}-${s.slice(0, 20)}`} className="stepList__item">
+                        <span className="stepNum">{String(idx + 1).padStart(2, "0")}</span>
+                        <p>{s}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              <div className="modal__footer">
+                <p className="tags">
+                  {open.tags.map((t, idx) => (
+                    <span key={`${idx}-${t}`} className="tag">
+                      {t}
+                    </span>
+                  ))}
+                </p>
+              </div>
             </div>
           </article>
         </div>
